@@ -1,14 +1,19 @@
 package com.checkers.bartolini.checkersModel;
 
-public class NormalPawn extends Pawn {
+public class QueenPawn extends Pawn {
+    @Override
+    public Team getTeam() {
+        return super.getTeam();
+    }
 
-    public NormalPawn(Team team) {
+    public QueenPawn(Team team) {
         super(team);
     }
 
     @Override
     public PossibleMovesChecker getPossibleMovesChecker() {
-        return new NormalPawnPossibleMovesChecker();
+
+        return new QueenPawnPossibleMovesChecker();
     }
 
     @Override
@@ -16,6 +21,4 @@ public class NormalPawn extends Pawn {
         //TODO implement
         return null;
     }
-
-
 }

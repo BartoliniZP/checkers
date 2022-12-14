@@ -23,4 +23,16 @@ public class Board {
     public Field getFieldAtPos(int row, int col) {
         return board[row][col];
     }
+
+    @Override
+    public String toString() {
+        String ret = "";
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                ret = ret.concat(board[i][j].toString());
+            }
+            ret = ret.concat("\n");
+        }
+        return ret;
+    }
 }

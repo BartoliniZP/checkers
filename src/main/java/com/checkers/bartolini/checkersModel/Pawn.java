@@ -18,4 +18,9 @@ public abstract class Pawn {
 
     public abstract TextureWrapper getPawnTexture();
 
+    @Override
+    public String toString() {
+        return "P";
+    }
+
 }

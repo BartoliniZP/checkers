@@ -29,4 +29,13 @@ public class Field {
     public Field getNeighbor(Direction dir) {
        return neighbors[dir.ordinal()];
     }
+
+    @Override
+    public String toString() {
+        if(this.containsPawn()) {
+            return pawnOnField.toString();
+        } else {
+            return "E";
+        }
+    }
 }
