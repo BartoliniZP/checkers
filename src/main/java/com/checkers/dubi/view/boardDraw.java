@@ -18,7 +18,7 @@ public class boardDraw {
 }
 
 class Tile extends Rectangle{
-    public Tile(int a, int b, boolean isRed){
+    public Tile(double a, double b, boolean isRed){
        setWidth(Main.tileSize);
        setHeight(Main.tileSize);
         setX(Main.margin/2+a*Main.tileSize);
