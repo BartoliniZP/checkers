@@ -6,20 +6,30 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumnBase;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    public static final int tileSize = 70;
+
+    public static final int margin = 100;
+    public static final int width = 8;
+    public static final int height = 8;
+    public static final int layersOfPawns = 3;
     @Override
     public void start(Stage primaryStage) {
+
+
         primaryStage.setTitle("Hello World");
-        Group root = new Group();
-        Scene scene = new Scene(root, 700, 700);
+        Pane root = new Pane();
+        Scene scene = new Scene(root, tileSize*width+margin, tileSize*height+margin);
 
-        Button addTale = new Button("AddTale");
-
+        Button addTale = new Button("AddTales");
         addTale.setOnAction( actionEvent ->
         {
-            boardDraw.drawBoard(8,8, root);
+            boardDraw.drawBoard(width,height,root);
         });
 
 
@@ -27,7 +37,7 @@ public class Main extends Application {
         addPawns.setLayoutX(100);
         addPawns.setOnAction( actionEvent ->
         {
-            pawnsDraw.drawPawns(root);
+            pawnsDraw.drawPawns(width, height, root, layersOfPawns);
 
         });
 
