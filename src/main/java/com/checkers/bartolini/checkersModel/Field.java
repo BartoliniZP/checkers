@@ -1,16 +1,24 @@
 package com.checkers.bartolini.checkersModel;
 
 public class Field {
-    public enum Direction {
-        NORTH,WEST,SOUTH,EAST
+
+    public Field(int row, int column) {
+        this.row = row;
+        this.column = column;
+        this.pawnOnField = null;
     }
 
-    public Field() {
-        neighbors = new Field[4];
-        pawnOnField = null;
+    private int row;
+    private int column;
+
+    public int getRow() {
+        return row;
     }
 
-    private Field[] neighbors;
+    public int getColumn() {
+        return column;
+    }
+
     private Pawn pawnOnField;
 
     public boolean containsPawn() {
@@ -21,13 +29,6 @@ public class Field {
     }
     public void setPawn(Pawn pawn) {
         pawnOnField=pawn;
-    }
-
-    public void setNeighbor(Field newNeighbor, Direction dir) {
-        neighbors[dir.ordinal()]=newNeighbor;
-    }
-    public Field getNeighbor(Direction dir) {
-       return neighbors[dir.ordinal()];
     }
 
     @Override

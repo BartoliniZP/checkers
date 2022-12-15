@@ -1,22 +1,32 @@
 package com.checkers.bartolini.checkersModel;
 
-public abstract class Pawn {
+import javafx.scene.text.Text;
+
+public class Pawn {
     public enum Team {
         WHITE, BLACK
     }
-    Team team;
+    private Team team;
+    private PossibleMovesChecker thisPawnMoves;
+    private TextureWrapper thisPawnTexture;
 
     public Team getTeam() {
         return team;
     }
 
-    public Pawn(Team team) {
+    public Pawn(Team team, PossibleMovesChecker thisPawnMoves, TextureWrapper thisPawnTexture) {
         this.team = team;
+        this.thisPawnMoves = thisPawnMoves;
+        this.thisPawnTexture = thisPawnTexture;
     }
 
-    public abstract PossibleMovesChecker getPossibleMovesChecker();
+    public PossibleMovesChecker getPossibleMovesChecker() {
+        return thisPawnMoves;
+    }
 
-    public abstract TextureWrapper getPawnTexture();
+    public TextureWrapper getPawnTexture() {
+        return thisPawnTexture;
+    }
 
     @Override
     public String toString() {

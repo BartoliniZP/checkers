@@ -21,6 +21,7 @@ public class Board {
     }
 
     public Field getFieldAtPos(int row, int col) {
+       if(row<0 || col<0 || row>=height || col >= width) throw new IllegalArgumentException();
         return board[row][col];
     }
 
