@@ -44,13 +44,15 @@ public class Pawn extends Circle{
                 double y=(((Rectangle) n).getY()-Main.margin/2)/Main.tileSize;
                 Pawn pawn=new Pawn(x,y,false,false);
                 root.getChildren().add(pawn);
-                System.out.println(x+" "+y+" "+ ((Rectangle) n).getX());
             }
         }
     }
 
     public static void movePawn(double x1, double y1, double x2, double y2, Pane root){
-
+        removePawn(Main.margin / 2 + (x1 + 0.5) * Main.tileSize,Main.margin / 2 + (y1 + 0.5) * Main.tileSize,root);
+        //do zrobienia: właściwości
+        addPawn(Main.margin / 2 + (x2 + 0.5) * Main.tileSize,Main.margin / 2 + (y2 + 0.5) * Main.tileSize,root);
     }
 
 }
+

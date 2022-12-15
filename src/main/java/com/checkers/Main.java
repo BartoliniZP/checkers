@@ -1,5 +1,6 @@
 package com.checkers;
 
+import com.checkers.dubi.view.Highlight;
 import com.checkers.dubi.view.Pawn;
 import com.checkers.dubi.view.boardDraw;
 import com.checkers.dubi.view.pawnsDraw;
@@ -14,12 +15,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static final int tileSize = 60;
+    public static final int tileSize = 70;
 
     public static final int margin = 100;
-    public static final int width = 10;
+    public static final int width = 8;
     public static final int height = 8;
-    public static final int layersOfPawns = 2;
+    public static final int layersOfPawns = 3;
     @Override
     public void start(Stage primaryStage) {
 
@@ -55,13 +56,32 @@ public class Main extends Application {
                 double clickY = e.getY();
                 Pawn.addPawn(clickX,clickY,root);
             }
+            if (e.getButton()==MouseButton.FORWARD){
+                double clickX = e.getX();
+                double clickY = e.getY();
+                Highlight.highlightTile(clickX,clickY,root);
+            }
+            if (e.getButton()==MouseButton.BACK){
+                double clickX = e.getX();
+                double clickY = e.getY();
+                Highlight.removeHighlight(clickX,clickY,root);
+            }
         });
 
-        root.getChildren().addAll(addTale, addPawns);
+        Button moveTest = new Button("MoveFirstTest");
+        moveTest.setLayoutX(200);
+        moveTest.setOnAction( actionEvent ->
+        {
+            Pawn.movePawn(1,0, 0,0,root);
+        });
+
+        root.getChildren().addAll(addTale, addPawns,moveTest);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
+
 
 
     public static void main(String[] args) {
