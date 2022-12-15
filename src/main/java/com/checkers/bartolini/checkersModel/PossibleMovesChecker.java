@@ -11,7 +11,41 @@ public abstract class PossibleMovesChecker {
     private boolean CanMoveBackwards;
     private boolean CanTakeBackwards;
 
+    protected Field getLeftUpperField(Board board, int row, int column) {
+        if (row != 0) {
+            if (column != 0) {
+                return board.getFieldAtPos(row - 1, column - 1);
+            }
+        }
+        return null;
+    }
 
+    protected Field getRightUpperField(Board board, int row, int column) {
+        if (row != 0) {
+            if (column != (board.getWidth() - 1)) {
+                return board.getFieldAtPos(row - 1, column + 1);
+            }
+        }
+        return null;
+    }
+
+    protected Field getLeftLowerField(Board board, int row, int column) {
+        if (row != (board.getHeight() - 1)) {
+            if (column != 0) {
+                return board.getFieldAtPos(row + 1, column - 1);
+            }
+        }
+        return null;
+    }
+
+    protected Field getRightLowerField(Board board, int row, int column) {
+        if (row != (board.getHeight() - 1)) {
+            if (column != (board.getWidth() - 1)) {
+                return board.getFieldAtPos(row + 1, column + 1);
+            }
+        }
+        return null;
+    }
     public boolean CanMoveBackwards() {
         return CanMoveBackwards;
     }

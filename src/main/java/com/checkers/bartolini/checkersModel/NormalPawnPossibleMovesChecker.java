@@ -49,41 +49,7 @@ public class NormalPawnPossibleMovesChecker extends PossibleMovesChecker {
         return toReturn;
     }
 
-    private Field getLeftUpperField(Board board, int row, int column) {
-        if (row != 0) {
-            if (column != 0) {
-                return board.getFieldAtPos(row - 1, column - 1);
-            }
-        }
-        return null;
-    }
 
-    private Field getRightUpperField(Board board, int row, int column) {
-        if (row != 0) {
-            if (column != (board.getWidth() - 1)) {
-                return board.getFieldAtPos(row - 1, column + 1);
-            }
-        }
-        return null;
-    }
-
-    private Field getLeftLowerField(Board board, int row, int column) {
-        if (row != (board.getHeight() - 1)) {
-            if (column != 0) {
-                return board.getFieldAtPos(row + 1, column - 1);
-            }
-        }
-        return null;
-    }
-
-    private Field getRightLowerField(Board board, int row, int column) {
-        if (row != (board.getHeight() - 1)) {
-            if (column != (board.getWidth() - 1)) {
-                return board.getFieldAtPos(row + 1, column + 1);
-            }
-        }
-        return null;
-    }
 
 
     @Override

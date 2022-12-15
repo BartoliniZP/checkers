@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NormalPawnMoveCheckerTest {
     @Test
@@ -31,7 +30,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -52,8 +51,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
-            ;
+            fail();
         }
     }
 
@@ -78,7 +76,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -98,7 +96,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -122,7 +120,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -146,7 +144,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -170,7 +168,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 
@@ -191,7 +189,7 @@ public class NormalPawnMoveCheckerTest {
             }
             assertEquals(expectedOutput, output);
         } catch (InvalidAlgorithmParameterException e) {
-            assertFalse(true);
+            fail();
         }
     }
 }
