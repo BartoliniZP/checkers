@@ -26,7 +26,7 @@ public class StandardWinCondition implements winCondition {
                 if (board.getFieldAtPos(i, j).containsPawn()) {
                     if (board.getFieldAtPos(i, j).getPawnOnField().getTeam() == team) {
                         try {
-                            List<Field> moves = board.getFieldAtPos(i, j).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, i, j);
+                            List<Move> moves = board.getFieldAtPos(i, j).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, i, j);
                             if(!moves.isEmpty()) {
                                 return true;
                             }

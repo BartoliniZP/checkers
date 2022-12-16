@@ -14,18 +14,18 @@ public class NormalPawnMoveCheckerTest {
         StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8, 8, 3, new NormalPawnFactory()); //standard builder creates pawns that cannot move backwards
         Board board = builder.createBoard();
         try {
-            List<Field> possibleFields = board.getFieldAtPos(2, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 2, 1);
+            List<Move> possibleFields = board.getFieldAtPos(2, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 2, 1);
             String expectedOutput = "30324143";//Black pawn at start pos (2,1) can move to field (3,0), can move to field (3,2), White pawn at start pos (5,2) returns (4,1) (4,3)
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             possibleFields = board.getFieldAtPos(5, 2).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 5, 2);
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -41,12 +41,33 @@ public class NormalPawnMoveCheckerTest {
         Board board = builder.createBoard();
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 1, 1);
+            List<Move> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 1, 1);
             String expectedOutput = "00022022";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
+
+            }
+            assertEquals(expectedOutput, output);
+        } catch (InvalidAlgorithmParameterException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void PawnWithEmptyNeighborsReturnsNoCaptures() {
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
+
+        Board board = builder.createBoard();
+        board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
+        try {
+            List<Move> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 1, 1);
+            String expectedOutput = "";
+            String output = "";
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -66,12 +87,12 @@ public class NormalPawnMoveCheckerTest {
         board.getFieldAtPos(2, 0).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(2, 2).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 1, 1);
+            List<Move> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 1, 1);
             String expectedOutput = "";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -86,12 +107,12 @@ public class NormalPawnMoveCheckerTest {
         Board board = builder.createBoard();
         board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
+            List<Move> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
             String expectedOutput = "11";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -106,12 +127,12 @@ public class NormalPawnMoveCheckerTest {
         Board board = builder.createBoard();
         board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
+            List<Move> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
             String expectedOutput = "";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -130,12 +151,12 @@ public class NormalPawnMoveCheckerTest {
         board.getFieldAtPos(3, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(3, 3).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
+            List<Move> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
             String expectedOutput = "00044044";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -154,12 +175,12 @@ public class NormalPawnMoveCheckerTest {
         board.getFieldAtPos(3, 1).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(3, 3).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
+            List<Move> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
             String expectedOutput = "";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -178,12 +199,12 @@ public class NormalPawnMoveCheckerTest {
         board.getFieldAtPos(3, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(3, 3).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
+            List<Move> possibleFields = board.getFieldAtPos(2, 2).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 2, 2);
             String expectedOutput = "4044";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);
@@ -199,12 +220,12 @@ public class NormalPawnMoveCheckerTest {
         board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
-            List<Field> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 1, 1);
+            List<Move> possibleFields = board.getFieldAtPos(1, 1).getPawnOnField().getPossibleMovesChecker().getPossibleTakes(board, 1, 1);
             String expectedOutput = "";
             String output = "";
-            for (Field f : possibleFields) {
-                output = output.concat(Integer.toString(f.getRow()));
-                output = output.concat(Integer.toString(f.getColumn()));
+            for (Move f : possibleFields) {
+                output = output.concat(Integer.toString(f.getDestination().getRow()));
+                output = output.concat(Integer.toString(f.getDestination().getColumn()));
 
             }
             assertEquals(expectedOutput, output);

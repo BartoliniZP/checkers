@@ -31,6 +31,9 @@ public class Field {
         pawnOnField=pawn;
     }
 
+    public void removePawn() {
+        pawnOnField=null;
+    }
     @Override
     public String toString() {
         if(this.containsPawn()) {

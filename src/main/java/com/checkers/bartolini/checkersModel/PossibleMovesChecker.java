@@ -4,8 +4,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 
 public abstract class PossibleMovesChecker {
-    public abstract List<Field> getPossibleMoves(Board board, int row, int column) throws InvalidAlgorithmParameterException;
-    public abstract List<Field> getPossibleTakes(Board board, int row, int col) throws InvalidAlgorithmParameterException;
+    public abstract List<Move> getPossibleMoves(Board board, int row, int column) throws InvalidAlgorithmParameterException;
+    public abstract List<Move> getPossibleTakes(Board board, int row, int col) throws InvalidAlgorithmParameterException;
     public abstract int getLongestTake(Field position);
 
     private boolean CanMoveBackwards;
