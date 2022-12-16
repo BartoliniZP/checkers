@@ -54,7 +54,7 @@ public class Main extends Application {
             if (e.getButton() == MouseButton.PRIMARY){
                 double clickX = e.getX();
                 double clickY = e.getY();
-                Pawn.addPawn(clickX,clickY,root);
+                Pawn.addPawn(clickX,clickY,true,true,root);
             }
             if (e.getButton()==MouseButton.FORWARD){
                 double clickX = e.getX();
@@ -66,16 +66,16 @@ public class Main extends Application {
                 double clickY = e.getY();
                 Highlight.removeHighlight(clickX,clickY,root);
             }
+            if(e.getButton()==MouseButton.MIDDLE){
+                double clickX = e.getX();
+                double clickY = e.getY();
+                Pawn.movePawn(clickX,clickY, clickX-tileSize,clickY-tileSize,root);
+            }
         });
 
-        Button moveTest = new Button("MoveFirstTest");
-        moveTest.setLayoutX(200);
-        moveTest.setOnAction( actionEvent ->
-        {
-            Pawn.movePawn(1,0, 0,0,root);
-        });
 
-        root.getChildren().addAll(addTale, addPawns,moveTest);
+
+        root.getChildren().addAll(addTale, addPawns);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
