@@ -24,26 +24,34 @@ public class NormalPawnPossibleMovesChecker extends PossibleMovesChecker {
         Field potentialMoveAfterCapture;
         if (team == Pawn.Team.WHITE || (team == Pawn.Team.BLACK && CanTakeBackwards())) {
             potentialCapture = getLeftUpperField(board,row,col);
-            potentialMoveAfterCapture = getLeftUpperField(board, potentialCapture.getRow(), potentialCapture.getColumn());
-            if(potentialCapture!=null && potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam()!=team && potentialMoveAfterCapture !=null && !potentialMoveAfterCapture.containsPawn() ) {
-                toReturn.add(potentialMoveAfterCapture);
+            if(potentialCapture!=null) {
+                potentialMoveAfterCapture = getLeftUpperField(board, potentialCapture.getRow(), potentialCapture.getColumn());
+                if (potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam() != team && potentialMoveAfterCapture != null && !potentialMoveAfterCapture.containsPawn()) {
+                    toReturn.add(potentialMoveAfterCapture);
+                }
             }
             potentialCapture = getRightUpperField(board,row,col);
-            potentialMoveAfterCapture = getRightUpperField(board, potentialCapture.getRow(), potentialCapture.getColumn());
-            if(potentialCapture!=null && potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam()!=team && potentialMoveAfterCapture !=null && !potentialMoveAfterCapture.containsPawn() ) {
-                toReturn.add(potentialMoveAfterCapture);
+            if(potentialCapture!=null) {
+                potentialMoveAfterCapture = getRightUpperField(board, potentialCapture.getRow(), potentialCapture.getColumn());
+                if ( potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam() != team && potentialMoveAfterCapture != null && !potentialMoveAfterCapture.containsPawn()) {
+                    toReturn.add(potentialMoveAfterCapture);
+                }
             }
         }
         if (team == Pawn.Team.BLACK || (team == Pawn.Team.WHITE && CanTakeBackwards())) {
             potentialCapture = getLeftLowerField(board,row,col);
-            potentialMoveAfterCapture = getLeftLowerField(board, potentialCapture.getRow(), potentialCapture.getColumn());
-            if(potentialCapture!=null && potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam()!=team && potentialMoveAfterCapture !=null && !potentialMoveAfterCapture.containsPawn() ) {
-                toReturn.add(potentialMoveAfterCapture);
+            if(potentialCapture!=null) {
+                potentialMoveAfterCapture = getLeftLowerField(board, potentialCapture.getRow(), potentialCapture.getColumn());
+                if (potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam() != team && potentialMoveAfterCapture != null && !potentialMoveAfterCapture.containsPawn()) {
+                    toReturn.add(potentialMoveAfterCapture);
+                }
             }
             potentialCapture = getRightLowerField(board,row,col);
-            potentialMoveAfterCapture = getRightLowerField(board, potentialCapture.getRow(), potentialCapture.getColumn());
-            if(potentialCapture!=null && potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam()!=team && potentialMoveAfterCapture !=null && !potentialMoveAfterCapture.containsPawn() ) {
-                toReturn.add(potentialMoveAfterCapture);
+            if(potentialCapture!=null) {
+                potentialMoveAfterCapture = getRightLowerField(board, potentialCapture.getRow(), potentialCapture.getColumn());
+                if (potentialCapture.containsPawn() && potentialCapture.getPawnOnField().getTeam() != team && potentialMoveAfterCapture != null && !potentialMoveAfterCapture.containsPawn()) {
+                    toReturn.add(potentialMoveAfterCapture);
+                }
             }
         }
         return toReturn;

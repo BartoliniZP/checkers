@@ -84,10 +84,30 @@ public class NormalPawnMoveCheckerTest {
     void NormalPawnPossibleMovesCheckerHandlesProperlyEdge() {
         StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
-        board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
+        board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper()));
         try {
             List<Field> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
             String expectedOutput = "11";
+            String output = "";
+            for (Field f : possibleFields) {
+                output = output.concat(Integer.toString(f.getRow()));
+                output = output.concat(Integer.toString(f.getColumn()));
+
+            }
+            assertEquals(expectedOutput, output);
+        } catch (InvalidAlgorithmParameterException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void WhitePawnThatCannotMoveBackwardReturnNoPossibleMovesIn00Position() {
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
+        Board board = builder.createBoard();
+        board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper()));
+        try {
+            List<Field> possibleFields = board.getFieldAtPos(0, 0).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 0, 0);
+            String expectedOutput = "";
             String output = "";
             for (Field f : possibleFields) {
                 output = output.concat(Integer.toString(f.getRow()));
