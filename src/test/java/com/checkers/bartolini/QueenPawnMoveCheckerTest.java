@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QueenPawnMoveCheckerTest {
     @Test
     void correctlyHandlesAllDiagonals() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8,8,0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8,8,0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(3,3).setPawn(new Pawn(Pawn.Team.WHITE,new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper()));
         try {
@@ -31,7 +31,7 @@ public class QueenPawnMoveCheckerTest {
 
     @Test
     void surroundedReturnsEmptyPossibleMoves() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
 
         Board board = builder.createBoard();
         board.getFieldAtPos(3, 3).setPawn(new Pawn(Pawn.Team.WHITE, new QueenPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -56,7 +56,7 @@ public class QueenPawnMoveCheckerTest {
 
     @Test
     void correctlyDetectCaptures() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8,8,0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8,8,0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(3,3).setPawn(new Pawn(Pawn.Team.WHITE,new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -80,7 +80,7 @@ public class QueenPawnMoveCheckerTest {
 
     @Test
     void ReturnsFourCapturesWhenSurroundedByOtherColorPawns() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(2, 2).setPawn(new Pawn(Pawn.Team.BLACK, new QueenPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NormalPawnMoveCheckerTest {
     @Test
     public void TestWhetherNormalPawnMoveCheckerReturnsCorrectFields() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8, 8, 3); //standard builder creates pawns that cannot move backwards
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(8, 8, 3, new NormalPawnFactory()); //standard builder creates pawns that cannot move backwards
         Board board = builder.createBoard();
         try {
             List<Field> possibleFields = board.getFieldAtPos(2, 1).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, 2, 1);
@@ -36,7 +36,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     public void PawnWithEmptyNeighborsAndEnabledMovingBackwardsReturnsAllFourFields() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
 
         Board board = builder.createBoard();
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -57,7 +57,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     public void PawnLockedReturnsEmptyList() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
 
         Board board = builder.createBoard();
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -82,7 +82,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     void NormalPawnPossibleMovesCheckerHandlesProperlyEdge() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         try {
@@ -102,7 +102,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     void ReturnsFourCapturesWhenSurroundedByOtherColorPawns() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(2, 2).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -126,7 +126,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     void ReturnsNoCapturesIfSurroundedByOwnTeamPawns() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(2, 2).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -150,7 +150,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     void ReturnsOnlyTwoCapturesIfNotAllowTakeBackwards() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(2, 2).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, false), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
@@ -174,7 +174,7 @@ public class NormalPawnMoveCheckerTest {
 
     @Test
     void DoesNotReturnCaptureIfThereIsNoFieldAfterPawn() {
-        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0);
+        StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(5, 5, 0, new NormalPawnFactory());
         Board board = builder.createBoard();
         board.getFieldAtPos(0, 0).setPawn(new Pawn(Pawn.Team.BLACK, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));
         board.getFieldAtPos(1, 1).setPawn(new Pawn(Pawn.Team.WHITE, new NormalPawnPossibleMovesChecker(true, true), new TextureWrapper()));

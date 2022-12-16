@@ -1,20 +1,23 @@
 package com.checkers.bartolini.checkersModel;
 
 public class StandardCheckersBoardBuilder implements boardBuilder {
+    //TODO takes PawnFactory argument
     private int boardHeight;
     private int boardWidth;
     private int rowsOfPawns;
 
-    public StandardCheckersBoardBuilder(int boardHeight, int boardWidth, int rowsOfPawns) {
+    private PawnFactory pawnFactory;
+
+    public StandardCheckersBoardBuilder(int boardHeight, int boardWidth, int rowsOfPawns, PawnFactory pawnFactory) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
         this.rowsOfPawns = rowsOfPawns;
+        this.pawnFactory = pawnFactory;
     }
 
 
     @Override
     public Board createBoard() {
-        PawnFactory pawnFactory = new NormalPawnFactory();
         Field[][] board = new Field[boardHeight][boardWidth];
         for (int h = 0; h < boardHeight; h++) {
             for (int w = 0; w < boardWidth; w++) {
