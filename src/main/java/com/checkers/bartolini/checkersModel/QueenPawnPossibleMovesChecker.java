@@ -93,12 +93,6 @@ public class QueenPawnPossibleMovesChecker extends PossibleMovesChecker {
         return toReturn;
     }
 
-    @Override
-    public int getLongestTake(Field position) {
-        //TODO implement
-        return 0;
-    }
-
     public QueenPawnPossibleMovesChecker(boolean canMoveBackwards, boolean canTakeBackwards) {
         super(canMoveBackwards, canTakeBackwards);
     }

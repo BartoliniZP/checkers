@@ -1,7 +1,6 @@
 package com.checkers.bartolini.checkersModel;
 
 public class StandardCheckersBoardBuilder implements boardBuilder {
-    //TODO takes PawnFactory argument
     private int boardHeight;
     private int boardWidth;
     private int rowsOfPawns;

@@ -5,13 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NormalPawnPossibleMovesChecker extends PossibleMovesChecker {
-    @Override
-    public int getLongestTake(Field position) {
-        //TODO implement
-        return 0;
-    }
-
-
 
     @Override
     public List<Move> getPossibleTakes(Board board, int row, int col) throws InvalidAlgorithmParameterException {
