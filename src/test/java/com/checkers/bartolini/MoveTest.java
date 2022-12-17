@@ -89,6 +89,8 @@ public class MoveTest {
             Move doubleMove = moves.get(0);
             doubleMove.setFollowingMove(new Move(board.getFieldAtPos(2, 2), board.getFieldAtPos(4, 4), board.getFieldAtPos(3, 3)));
             doubleMove.applyMove();
+            assertEquals(doubleMove.getDestination().getRow(),4);
+            assertEquals(doubleMove.getDestination().getColumn(),4);
             assertFalse(board.getFieldAtPos(0, 0).containsPawn());
             assertFalse(board.getFieldAtPos(1, 1).containsPawn());
             assertFalse(board.getFieldAtPos(3, 3).containsPawn());
@@ -101,6 +103,7 @@ public class MoveTest {
             assertFalse(board.getFieldAtPos(2,2).containsPawn());
             assertFalse(board.getFieldAtPos(4,4).containsPawn());
             assertEquals(2,doubleMove.getMoveSize());
+            assertEquals("00 11 22 33 44/",doubleMove.toString());
         } catch(InvalidAlgorithmParameterException e) {
             fail();
         }

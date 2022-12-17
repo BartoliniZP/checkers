@@ -96,6 +96,15 @@ public class QueenPawnPossibleMovesChecker extends PossibleMovesChecker {
     public QueenPawnPossibleMovesChecker(boolean canMoveBackwards, boolean canTakeBackwards) {
         super(canMoveBackwards, canTakeBackwards);
     }
+
+    public QueenPawnPossibleMovesChecker(QueenPawnPossibleMovesChecker toCopy) {
+        super(toCopy);
+    }
+
+    @Override
+    public PossibleMovesChecker clone() {
+        return new QueenPawnPossibleMovesChecker(this);
+    }
 }
 
 

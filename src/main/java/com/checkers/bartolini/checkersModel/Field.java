@@ -8,6 +8,15 @@ public class Field {
         this.pawnOnField = null;
     }
 
+    public Field(Field toCopy) {
+        this.row = toCopy.row;
+        this.column = toCopy.column;
+        if(toCopy.pawnOnField!=null)
+        this.pawnOnField = toCopy.pawnOnField.clone();
+    }
+    public Field clone() {
+        return new Field(this);
+    }
     private int row;
     private int column;
 

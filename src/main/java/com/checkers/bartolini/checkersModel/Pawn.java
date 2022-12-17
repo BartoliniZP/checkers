@@ -20,6 +20,15 @@ public class Pawn {
         this.thisPawnTexture = thisPawnTexture;
     }
 
+    public Pawn(Pawn toCopy) {
+        this.team = toCopy.team;
+        this.thisPawnTexture = toCopy.thisPawnTexture.clone();
+        this.thisPawnMoves = toCopy.thisPawnMoves.clone();
+    }
+
+    public Pawn clone() {
+        return new Pawn(this);
+    }
     public PossibleMovesChecker getPossibleMovesChecker() {
         return thisPawnMoves;
     }

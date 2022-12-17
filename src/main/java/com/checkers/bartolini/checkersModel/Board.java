@@ -21,7 +21,7 @@ public class Board {
     }
 
     public Field getFieldAtPos(int row, int col) {
-       if(row<0 || col<0 || row>=height || col >= width) throw new IllegalArgumentException();
+        if (row < 0 || col < 0 || row >= height || col >= width) throw new IllegalArgumentException();
         return board[row][col];
     }
 
@@ -35,5 +35,20 @@ public class Board {
             ret = ret.concat("\n");
         }
         return ret;
+    }
+
+    public Board(Board toCopy) {
+        this.height = toCopy.height;
+        this.width = toCopy.width;
+        this.board = new Field[toCopy.height][toCopy.width];
+        for (int i = 0; i < toCopy.height; i++) {
+            for (int j = 0; j < toCopy.width; j++) {
+                this.board[i][j]=toCopy.getFieldAtPos(i,j).clone();
+            }
+        }
+    }
+
+    public Board clone() {
+        return new Board(this);
     }
 }

@@ -34,6 +34,7 @@ public class NormalPawnMoveCheckerTest {
         }
     }
 
+
     @Test
     public void PawnWithEmptyNeighborsAndEnabledMovingBackwardsReturnsAllFourFields() {
         StandardCheckersBoardBuilder builder = new StandardCheckersBoardBuilder(3, 3, 0, new NormalPawnFactory());

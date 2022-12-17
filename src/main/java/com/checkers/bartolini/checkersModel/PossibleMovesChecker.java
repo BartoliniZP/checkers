@@ -10,6 +10,10 @@ public abstract class PossibleMovesChecker {
     private boolean CanMoveBackwards;
     private boolean CanTakeBackwards;
 
+    public PossibleMovesChecker(PossibleMovesChecker toCopy) {
+        this.CanMoveBackwards = toCopy.CanMoveBackwards();
+        this.CanTakeBackwards = toCopy.CanTakeBackwards();
+    }
     protected Field getLeftUpperField(Board board, int row, int column) {
         if (row != 0) {
             if (column != 0) {
@@ -57,4 +61,6 @@ public abstract class PossibleMovesChecker {
         CanMoveBackwards = canMoveBackwards;
         CanTakeBackwards = canTakeBackwards;
     }
+
+    public abstract PossibleMovesChecker clone();
 }

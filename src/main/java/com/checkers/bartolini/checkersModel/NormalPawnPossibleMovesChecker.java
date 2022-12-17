@@ -88,4 +88,13 @@ public class NormalPawnPossibleMovesChecker extends PossibleMovesChecker {
     public NormalPawnPossibleMovesChecker(boolean canMoveBackwards, boolean canTakeBackwards) {
         super(canMoveBackwards, canTakeBackwards);
     }
+
+    public NormalPawnPossibleMovesChecker(NormalPawnPossibleMovesChecker toCopy) {
+        super(toCopy);
+    }
+
+    @Override
+    public PossibleMovesChecker clone() {
+        return new NormalPawnPossibleMovesChecker(this);
+    }
 }
