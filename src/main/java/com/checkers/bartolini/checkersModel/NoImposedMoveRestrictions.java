@@ -7,21 +7,9 @@ import java.util.List;
 public class NoImposedMoveRestrictions implements PermittedMovesRules {
     @Override
     public List<Move> getPermittedMoves(Board board, Pawn.Team team) {
-        MultipleCapturesFinder captureFinder = new StandardMultipleCapturesFinder();
         List<Move> toReturn = new ArrayList<>();
-        for (int i = 0; i < board.getHeight(); i++) {
-            for (int j = 0; j < board.getWidth(); j++) {
-                if (board.getFieldAtPos(i, j).containsPawn() && board.getFieldAtPos(i, j).getPawnOnField().getTeam() == team) {
-                    try {
-                        toReturn.addAll(board.getFieldAtPos(i, j).getPawnOnField().getPossibleMovesChecker().getPossibleMoves(board, i, j));
-                        toReturn.addAll(captureFinder.getMultipleCaptures(board,i,j));
-                    }
-                    catch(InvalidAlgorithmParameterException e) {
-
-                    }
-                }
-            }
-        }
+        toReturn.addAll(PermittedMovesRules.getAllPossibleTakes(board,team));
+        toReturn.addAll(PermittedMovesRules.getPossibleMoves(board,team));
     return toReturn;
     }
 
