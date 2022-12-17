@@ -72,34 +72,26 @@ public class Board {
     public void removePawn(double xCursor, double yCursor){
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
-        //System.out.println(pawns[x][y]+" - remove");
         if(pawns[x][y]!=null){
             root.getChildren().remove(pawns[x][y]);
             pawns[x][y]=null;
         }
-        if(fields[x][y].getFill()==highlightFieldSelectedPawnColor){
-            if((x+y)%2==0){
-                fields[x][y].setFill(color1);
-            } else{
-                fields[x][y].setFill(color2);
-            }
-        }
+
     }
 
     public void highlightFieldSelectedPawn(double xCursor, double yCursor) {
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
-        if(pawns[x][y]!=null){
+
             fields[x][y].setFill(highlightFieldSelectedPawnColor );
-        }
+
     }
 
     public void highlightFieldPossibleMove(double xCursor, double yCursor){
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
-        if(pawns[x][y]==null){
             fields[x][y].setFill(highlightFieldPossibleMoveColor);
-        }
+
     }
     public void removehighlightField(double xCursor, double yCursor) {
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];

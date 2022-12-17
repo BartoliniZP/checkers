@@ -8,7 +8,6 @@ import javafx.scene.shape.Circle;
 public class NormalPawn extends Pawn {
 
 
-
     Circle circle =null;
     @Override
     Node getTexture () {
@@ -23,7 +22,5 @@ public class NormalPawn extends Pawn {
         }
         circle.setRadius(Main.tileSize * Main.pawnSkale);
     }
-
-
 
 }

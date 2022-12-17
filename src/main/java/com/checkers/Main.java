@@ -16,12 +16,10 @@ public class Main extends Application {
     public static final int tileSize = 70;
     public static final double pawnSkale = 0.4;
 
-  //  public static final int margin = 100;
+    public static final int margin = 100;
     public static final int width = 8;
     public static final int height = 8;
     public static final int layersOfPawns = 2;
-   // public static final Color pawnColor1 = Color.BLACK;
-    //public static final Color pawnColor2 = Color.WHITE;
     @Override
     public void start(Stage primaryStage) {
 
@@ -52,77 +50,28 @@ public class Main extends Application {
 
         root.setOnMouseClicked(e->
                 {
-                    if (e.getButton() == MouseButton.FORWARD) {
+                    if (e.getButton() == MouseButton.PRIMARY) {
                         double clickX = e.getX();
                         double clickY = e.getY();
                         board.removePawn(clickX,clickY);
-                        System.out.println(board.getFieldCoordinatesOnBoard(clickX, clickY)[0]+" "+board.getFieldCoordinatesOnBoard(clickX, clickY)[1]);
                     }
-                    if (e.getButton() == MouseButton.PRIMARY){
+                    if (e.getButton() == MouseButton.FORWARD){
                         double clickX = e.getX();
                         double clickY = e.getY();
-                        board.highlightFieldSelectedPawn(clickX,clickY);
                         board.highlightFieldPossibleMove(clickX,clickY);
                     }
-                    if (e.getButton() == MouseButton.SECONDARY){
+                    if (e.getButton() == MouseButton.MIDDLE){
                         double clickX = e.getX();
                         double clickY = e.getY();
                         board.removehighlightField(clickX,clickY);
                     }
+                    if (e.getButton() == MouseButton.BACK){
+                        double clickX = e.getX();
+                        double clickY = e.getY();
+                        board.highlightFieldSelectedPawn(clickX,clickY);
+                    }
                 });
 
-
-
-
-
-        /*
-        Button addTale = new Button("AddTales");
-        addTale.setOnAction( actionEvent ->
-        {
-            boardDraw.drawBoard(width,height,root);
-        });
-
-
-        Button addPawns = new Button("AddPawns");
-        addPawns.setLayoutX(100);
-        addPawns.setOnAction( actionEvent ->
-        {
-            pawnsDraw.drawPawns(width, height, root, layersOfPawns);
-
-        });
-
-        root.setOnMouseClicked(e->
-        {
-            if (e.getButton() == MouseButton.SECONDARY){
-                double clickX = e.getX();
-                double clickY = e.getY();
-                Pawn.removePawn(clickX,clickY,root);
-            }
-            if (e.getButton() == MouseButton.PRIMARY){
-                double clickX = e.getX();
-                double clickY = e.getY();
-                Pawn.addPawn(clickX,clickY,true,true,root);
-            }
-            if (e.getButton()==MouseButton.FORWARD){
-                double clickX = e.getX();
-                double clickY = e.getY();
-                Highlight.highlightTile(clickX,clickY,root);
-            }
-            if (e.getButton()==MouseButton.BACK){
-                double clickX = e.getX();
-                double clickY = e.getY();
-                Highlight.removeHighlight(clickX,clickY,root);
-            }
-            if(e.getButton()==MouseButton.MIDDLE){
-                double clickX = e.getX();
-                double clickY = e.getY();
-                Pawn.movePawn(clickX,clickY, clickX-tileSize,clickY-tileSize,root);
-            }
-        });
-
-
-
-        root.getChildren().addAll(addTale, addPawns);*/
 
 
         primaryStage.setScene(scene);
