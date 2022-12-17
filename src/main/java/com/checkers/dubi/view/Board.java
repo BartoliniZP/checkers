@@ -13,21 +13,22 @@ public class Board {
      Color color1;
      Color color2;
      Pane root;
-     double tileSize;
+     int tileSize;
+    Color highlightFieldSelectedPawnColor = Color.MEDIUMPURPLE;
+    Color highlightFieldPossibleMoveColor = Color.PURPLE;
 
-
-    public Board(int height, int width, Color color1, Color color2, Pane root, double tileSize) {
+    public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize) {
         this.height =height;
         this.width=width;
         this.color1=color1;
         this.color2=color2;
         this.root=root;
         this.tileSize=tileSize;
-        this.pawns = new Pawn[height][width];
-        this.fields = new Rectangle[height][width];
+        this.pawns = new Node[width][height];
+        this.fields = new Rectangle[width][height];
     }
-    Pawn[][] pawns; //height-width nie działa, temp 100
-    Rectangle[][] fields;  //height-width nie działa, temp 100
+    Node[][] pawns;
+    Rectangle[][] fields;
 
     public void drawBoard(){
 
@@ -39,19 +40,20 @@ public class Board {
                 } else{
                     rectangle.setFill(color2);
                 }
-                fields[i][j]=rectangle;
+
                 root.getChildren().add(rectangle);
+                fields[i][j]=rectangle;
             }
         }
 
 
     }
 
-    public double[] getFieldCoordinatesOnBoard(double x, double y){
-        double[] coordinates = new double[2];
+    public int[] getFieldCoordinatesOnBoard(double x, double y){
+        int[] coordinates = new int[2];
          //0 is x, 1 is y
-        coordinates[0]=(int)x/50;
-        coordinates[1]=(int)y/50;
+        coordinates[0]=(int)x/tileSize;
+        coordinates[1]=(int)y/tileSize;
         return coordinates;
     }
 
@@ -61,8 +63,52 @@ public class Board {
         }
         boolean isWhite = pawn.getColor();
         Node p = pawn.getTexture();
-        p.relocate((xPos)* Main.tileSize+((double)tileSize/10.0),(yPos)*Main.tileSize+((double)tileSize/10.0));
+        p.setTranslateX((xPos+0.5)* Main.tileSize);
+        p.setTranslateY((yPos+0.5)*Main.tileSize);
         root.getChildren().add(p);
-        pawns[xPos][yPos]=pawn;
+        pawns[xPos][yPos]=p;
     }
+
+    public void removePawn(double xCursor, double yCursor){
+        int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
+        int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
+        //System.out.println(pawns[x][y]+" - remove");
+        if(pawns[x][y]!=null){
+            root.getChildren().remove(pawns[x][y]);
+            pawns[x][y]=null;
+        }
+        if(fields[x][y].getFill()==highlightFieldSelectedPawnColor){
+            if((x+y)%2==0){
+                fields[x][y].setFill(color1);
+            } else{
+                fields[x][y].setFill(color2);
+            }
+        }
+    }
+
+    public void highlightFieldSelectedPawn(double xCursor, double yCursor) {
+        int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
+        int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
+        if(pawns[x][y]!=null){
+            fields[x][y].setFill(highlightFieldSelectedPawnColor );
+        }
+    }
+
+    public void highlightFieldPossibleMove(double xCursor, double yCursor){
+        int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
+        int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
+        if(pawns[x][y]==null){
+            fields[x][y].setFill(highlightFieldPossibleMoveColor);
+        }
+    }
+    public void removehighlightField(double xCursor, double yCursor) {
+        int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
+        int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
+        if((x+y)%2==0){
+            fields[x][y].setFill(color1);
+        } else{
+            fields[x][y].setFill(color2);
+        }
+    }
+
 }

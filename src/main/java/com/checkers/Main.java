@@ -19,7 +19,7 @@ public class Main extends Application {
   //  public static final int margin = 100;
     public static final int width = 8;
     public static final int height = 8;
-    public static final int layersOfPawns = 3;
+    public static final int layersOfPawns = 2;
    // public static final Color pawnColor1 = Color.BLACK;
     //public static final Color pawnColor2 = Color.WHITE;
     @Override
@@ -36,21 +36,40 @@ public class Main extends Application {
         for(int i=0;i<height;i++){
             for(int j=0; j<width;j++){
                 if(j < layersOfPawns && (i+j)%2==1) {
-                    board.addPawn(i, j, new NormalPawn(true));
+                    board.addPawn(i,j, new NormalPawn(false));
                 }
                 if(j >= height-layersOfPawns && (i+j)%2==1){
-                    board.addPawn(i, j, new NormalPawn(false));
+                    board.addPawn(i,j, new NormalPawn(true));
                 }
 
             }
         }
 
+        board.addPawn(3, 3, new QueenPawn(false));
+        board.addPawn(3, 4, new QueenPawn(true));
 
 
 
-
-
-
+        root.setOnMouseClicked(e->
+                {
+                    if (e.getButton() == MouseButton.FORWARD) {
+                        double clickX = e.getX();
+                        double clickY = e.getY();
+                        board.removePawn(clickX,clickY);
+                        System.out.println(board.getFieldCoordinatesOnBoard(clickX, clickY)[0]+" "+board.getFieldCoordinatesOnBoard(clickX, clickY)[1]);
+                    }
+                    if (e.getButton() == MouseButton.PRIMARY){
+                        double clickX = e.getX();
+                        double clickY = e.getY();
+                        board.highlightFieldSelectedPawn(clickX,clickY);
+                        board.highlightFieldPossibleMove(clickX,clickY);
+                    }
+                    if (e.getButton() == MouseButton.SECONDARY){
+                        double clickX = e.getX();
+                        double clickY = e.getY();
+                        board.removehighlightField(clickX,clickY);
+                    }
+                });
 
 
 

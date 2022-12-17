@@ -11,7 +11,7 @@ public class NormalPawn extends Pawn {
 
     Circle circle =null;
     @Override
-    Node getTexture () {   //Color? Node? Circle?
+    Node getTexture () {
         return circle;
     }
     public NormalPawn(boolean isWhite){
