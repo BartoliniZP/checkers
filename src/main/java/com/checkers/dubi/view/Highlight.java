@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Highlight extends Rectangle {
-    public Highlight(double a, double b){
+    /*public Highlight(double a, double b){
         setWidth(Main.tileSize);
         setHeight(Main.tileSize);
         setX(Main.margin/2+a*Main.tileSize);
@@ -41,5 +41,5 @@ public class Highlight extends Rectangle {
                 break;
             }
         }
-    }
+    }*/
 }

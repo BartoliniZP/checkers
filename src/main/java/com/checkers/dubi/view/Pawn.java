@@ -8,7 +8,37 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class Pawn extends Circle {
+abstract class Pawn {
+
+        private boolean isWhite;
+
+    public boolean isWhite() {
+        return isWhite;
+    }
+
+    public void setWhite(boolean white) {
+        isWhite = white;
+    }
+
+    boolean getColor(){
+            return isWhite;
+        }
+        abstract Node getTexture();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     public Pawn(double a, double b, boolean isWhite, boolean isQueen) {
         setCenterX(Main.margin / 2 + (a + 0.5) * Main.tileSize);
         setCenterY(Main.margin / 2 + (b + 0.5) * Main.tileSize);
@@ -100,6 +130,6 @@ public class Pawn extends Circle {
 
         }
 
-    }
+    }*/
 }
 
