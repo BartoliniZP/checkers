@@ -5,6 +5,11 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing checkers game instance that is also responsible for handling user's field click
+ * not implemented promoting to queen on last lane
+ * example standard 8x8 checkers instance:     gameState standardGame = new gameState(new StandardWinCondition(),new BestTakeObligatory(),new StandardCheckersBoardBuilder(8,8,3,new NormalPawnFactory()),new NormalPawnFactory());
+ */
 public class gameState {
     private Board board;
     private winCondition winConditionChecker;
@@ -35,30 +40,71 @@ public class gameState {
         return whoToMove;
     }
 
+    /**
+     * gameView interface is a class which instance is informed by gameState about changes in game like move, finish of game, possible moves from user's selected field
+     */
     public interface gameView {
+        /**
+         * Shall draw board on screen
+         * @param b board to draw
+         */
         void drawBoard(Board b);
 
+        /**
+         * Shall inform that game has finished (Eg. pop-up)
+         * @param whoWon informs who win using gameState enum
+         */
         void gameFinish(winCondition.gameState whoWon);
 
+        /**
+         * Shall unhighlight passed field
+         * @param field to unhighlight
+         */
         void unhighlightField(Pair<Integer, Integer> field);
 
+        /**
+         * Shall unhighlight all field
+         */
         void unhighlightAllFields();
 
+        /**
+         * Shall highlight passed field as if it is field with pawn selected by user to move
+         * @param field to highlight
+         */
         void selectedField(Pair<Integer, Integer> field);
 
-        void highlightPossibleMove(Pair<Integer, Integer> moves);
+        /**
+         * Shall highlight passed field as if it possible move for user
+         * @param move field to highlight
+         */
+        void highlightPossibleMove(Pair<Integer, Integer> move);
 
+        /**
+         * Shall add pawn with passed Texture on screen
+         * @param pawnTexture pawnTexture
+         * @param field where to add pawn
+         */
         void addPawn(TextureWrapper pawnTexture, Pair<Integer, Integer> field);
 
+        /**
+         * Shall remove pawn on passed position
+         * @param field position
+         */
         void removePawn(Pair<Integer, Integer> field);
     }
 
+    /**
+     * Function to set view informed by this class about changes in game
+     * @param view view to set
+     */
     public void setView(gameView view) {
         this.view = view;
         if (view != null) view.drawBoard(board);
     }
 
-
+    /**
+     * Interpreted as resign of current player to move
+     */
     public void resign() {
         if (isGameFinished != winCondition.gameState.noWinner) return;
         if (whoToMove == Pawn.Team.WHITE) {
@@ -69,10 +115,10 @@ public class gameState {
         if (view != null) view.gameFinish(isGameFinished);
     }
 
-    public Board getBoard() { //todo remove
-        return board;
-    }
-
+    /**
+     * This function shall be called by controller when user presses mouse on some field on board
+     * @param field coordinates of clicked field
+     */
     public void fieldClicked(Pair<Integer, Integer> field) {
         if (isGameFinished != winCondition.gameState.noWinner) return;
         if (currentlySelectedField == null) {
@@ -96,6 +142,9 @@ public class gameState {
 
     }
 
+    /**
+     * Undo last move
+     */
     public void undo() {
         if (isGameFinished != winCondition.gameState.noWinner) return;
         if (moveHistory.isEmpty()) return;
@@ -209,5 +258,8 @@ public class gameState {
         }
     }
 
+    public Board getBoard() { //todo remove after tests
+        return board;
+    }
 
 }
