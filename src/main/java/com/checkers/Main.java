@@ -41,6 +41,8 @@ public class Main extends Application {
         game.fieldClicked(new Pair<>(3,2));
         game.fieldClicked(new Pair<>(5,4));
 
+
+
         if(game.getWhoToMove()== Pawn.Team.WHITE) {
             System.out.println("It works");
         }
@@ -50,6 +52,14 @@ public class Main extends Application {
             System.out.println("It works 100%");
         }
 
+        System.out.println(game.getBoard().toString());
+        game.undo();
+        game.undo();
+        game.undo();
+        game.undo();
+        game.undo();
+        game.undo();
+        game.undo();
         System.out.println(game.getBoard().toString());
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);

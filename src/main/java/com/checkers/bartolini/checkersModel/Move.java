@@ -74,7 +74,7 @@ public class Move {
         to.removePawn();
         if (captureRemoveAtThisPosition != null && captureRemoveAtThisPosition.containsPawn())
             throw new IncorrectMoveException("Unable to undo move: Captured pawn field is not empty");
-        captureRemoveAtThisPosition.setPawn(capturedPawnCopy);
+        if (captureRemoveAtThisPosition != null) captureRemoveAtThisPosition.setPawn(capturedPawnCopy);
 
     }
 
