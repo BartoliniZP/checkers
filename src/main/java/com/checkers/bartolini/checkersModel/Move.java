@@ -1,11 +1,11 @@
 package com.checkers.bartolini.checkersModel;
 
 public class Move {
-    Field from;
-    Field to;
-    Field captureRemoveAtThisPosition;
-    Pawn capturedPawnCopy;
-    Move child;
+    private Field from;
+    private Field to;
+    private Field captureRemoveAtThisPosition;
+    private Pawn capturedPawnCopy;
+    private  Move child;
 
     public Move(Field from, Field to, Field captured) {
         this.child=null;
