@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        gameState game = new gameState(new StandardWinCondition(),new BestTakeObligatory(),new StandardCheckersBoardBuilder(8,8,3,new NormalPawnFactory()),new NormalPawnFactory());
+        gameState game = new gameState(new StandardWinCondition(),new BestTakeObligatory(),new StandardCheckersBoardBuilder(8,8,3,new NormalPawnFactory()),new NormalPawnFactory(), new PromoteToQueenOnLastRank(new NormalPawnFactory()));
         System.out.println(game.getBoard().toString());
         game.fieldClicked(new Pair<>(5,2));
         game.fieldClicked(new Pair<>(4,3));
@@ -53,7 +53,6 @@ public class Main extends Application {
         }
 
         System.out.println(game.getBoard().toString());
-        game.undo();
         game.undo();
         game.undo();
         game.undo();

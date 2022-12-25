@@ -21,18 +21,20 @@ public class gameState {
     private Field currentlySelectedField;
     private winCondition.gameState isGameFinished;
     private gameView view;
+    private OnGettingToLastRank onGettingToLastRank;
 
-    public gameState(winCondition conditionOfWin, PermittedMovesRules moveRestrictions, boardBuilder boardBuild, PawnFactory pawnGenerator) {
+    public gameState(winCondition conditionOfWin, PermittedMovesRules moveRestrictions, boardBuilder boardBuild, PawnFactory pawnGenerator, OnGettingToLastRank whatToDo) {
         this.board = boardBuild.createBoard();
         this.winConditionChecker = conditionOfWin;
         this.whoToMove = Pawn.Team.WHITE;
         this.moveRestrictions = moveRestrictions;
         this.queenCreator = pawnGenerator;
         this.moveHistory = new ArrayList<>();
-        this.currentlyPossibleMoves = this.moveRestrictions.getPermittedMoves(board,whoToMove);
+        this.currentlyPossibleMoves = this.moveRestrictions.getPermittedMoves(board, whoToMove);
         this.currentlySelectedField = null;
         this.isGameFinished = this.winConditionChecker.checkForGameFinish(board);
         this.view = null;
+        this.onGettingToLastRank = whatToDo;
 
     }
 
@@ -46,18 +48,21 @@ public class gameState {
     public interface gameView {
         /**
          * Shall draw board on screen
+         *
          * @param b board to draw
          */
         void drawBoard(Board b);
 
         /**
          * Shall inform that game has finished (Eg. pop-up)
+         *
          * @param whoWon informs who win using gameState enum
          */
         void gameFinish(winCondition.gameState whoWon);
 
         /**
          * Shall unhighlight passed field
+         *
          * @param field to unhighlight
          */
         void unhighlightField(Pair<Integer, Integer> field);
@@ -69,25 +74,29 @@ public class gameState {
 
         /**
          * Shall highlight passed field as if it is field with pawn selected by user to move
+         *
          * @param field to highlight
          */
         void selectedField(Pair<Integer, Integer> field);
 
         /**
-         * Shall highlight passed field as if it possible move for user
+         * Shall highlight passed field as if it is possible move for user
+         *
          * @param move field to highlight
          */
         void highlightPossibleMove(Pair<Integer, Integer> move);
 
         /**
          * Shall add pawn with passed Texture on screen
+         *
          * @param pawnTexture pawnTexture
-         * @param field where to add pawn
+         * @param field       where to add pawn
          */
         void addPawn(TextureWrapper pawnTexture, Pair<Integer, Integer> field);
 
         /**
          * Shall remove pawn on passed position
+         *
          * @param field position
          */
         void removePawn(Pair<Integer, Integer> field);
@@ -95,6 +104,7 @@ public class gameState {
 
     /**
      * Function to set view informed by this class about changes in game
+     *
      * @param view view to set
      */
     public void setView(gameView view) {
@@ -117,6 +127,7 @@ public class gameState {
 
     /**
      * This function shall be called by controller when user presses mouse on some field on board
+     *
      * @param field coordinates of clicked field
      */
     public void fieldClicked(Pair<Integer, Integer> field) {
@@ -160,14 +171,18 @@ public class gameState {
 
 
     protected void applyMove(Move move) {
-        if(isGameFinished!= winCondition.gameState.noWinner) return;
+        if (isGameFinished != winCondition.gameState.noWinner) return;
         try {
             move.applyMove();
             moveHistory.add(move);
             informView(move, true);
+            boolean promoted = onGettingToLastRank.checkLastRanks(board);
+            if (promoted) {
+                refreshLastRanksOnView();
+            }
             if (whoToMove == Pawn.Team.WHITE) whoToMove = Pawn.Team.BLACK;
             else whoToMove = Pawn.Team.WHITE;
-            currentlyPossibleMoves = moveRestrictions.getPermittedMoves(board,whoToMove);
+            currentlyPossibleMoves = moveRestrictions.getPermittedMoves(board, whoToMove);
             isGameFinished = winConditionChecker.checkForGameFinish(board);
             informViewAboutResult();
         } catch (IncorrectMoveException e) {
@@ -176,10 +191,26 @@ public class gameState {
 
     }
 
+    protected void refreshLastRanksOnView() {
+        if (view == null) return;
+        for (int j = 0; j < board.getWidth(); j++) {
+            Field fieldToRefresh = board.getFieldAtPos(0, j);
+            if (fieldToRefresh.containsPawn()) {
+                view.removePawn(new Pair<>(0, j));
+                view.addPawn(fieldToRefresh.getPawnOnField().getPawnTexture(), new Pair<>(0, j));
+            }
+            fieldToRefresh = board.getFieldAtPos(board.getHeight() - 1, j);
+            if (fieldToRefresh.containsPawn()) {
+                view.removePawn(new Pair<>(board.getHeight() - 1, j));
+                view.addPawn(fieldToRefresh.getPawnOnField().getPawnTexture(), new Pair<>(board.getHeight() - 1, j));
+            }
+        }
+    }
+
     private void unselectCurrentField() {
         if (currentlySelectedField == null) return;
         currentlySelectedField = null;
-        if(view==null) return;
+        if (view == null) return;
         view.unhighlightField(convertFieldToPair(currentlySelectedField));
         view.unhighlightAllFields();
     }
@@ -248,7 +279,7 @@ public class gameState {
                 List<Move> potentialMoves = findCurrentlyPossibleMovesFrom(fi);
                 if (!potentialMoves.isEmpty()) {
                     currentlySelectedField = fi;
-                    if(view==null) return;
+                    if (view == null) return;
                     view.selectedField(convertFieldToPair(fi));
                     for (Move move : potentialMoves) {
                         view.highlightPossibleMove(convertFieldToPair(move.getDestination()));
