@@ -1,5 +1,6 @@
 package com.checkers;
 
+import com.checkers.bartolini.checkersModel.*;
 import com.checkers.dubi.view.*;
 import com.checkers.dubi.view.Board;
 import javafx.application.Application;
@@ -8,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class Main extends Application {
 /*
@@ -69,6 +71,9 @@ public class Main extends Application {
         stage.show();*/
 //=======
 
+
+
+    // ====================================================
     public static final int tileSize = 50;
     public static final double pawnScale = 0.4;
 
@@ -76,6 +81,7 @@ public class Main extends Application {
     public static final int width = 10;
     public static final int height = 10;
     public static final int layersOfPawns = 3;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -84,7 +90,7 @@ public class Main extends Application {
         Pane root = new Pane();
         Scene scene = new Scene(root, tileSize*height, tileSize*width);
         Board board = new Board(height,width, Color.RED, Color.GREEN,root,tileSize);
-        board.drawBoard();
+        board.drawBoard(height,width);
 
 
         for(int i=0;i<height;i++){
@@ -103,6 +109,7 @@ public class Main extends Application {
       //  board.addPawn(3, 4, new QueenPawn(true));
 
 
+// todo w mainie obiekt klasy gamestate do którego przekazuję współrzędne pola
 
         root.setOnMouseClicked(e->
                 {
@@ -110,6 +117,9 @@ public class Main extends Application {
                         double clickX = e.getX();
                         double clickY = e.getY();
                         board.removePawn(clickX,clickY);
+                     //   gState.fieldclicked
+                        // todo przekonwertować na parę współrzędnych
+
                     }
                     if (e.getButton() == MouseButton.FORWARD){
                         double clickX = e.getX();
@@ -135,8 +145,18 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    //=================================================================
 
+/*
+    @Override
+    public void start(Stage primaryStage){
+        gameState standardGame = new gameState(new StandardWinCondition(),new BestTakeObligatory(),new StandardCheckersBoardBuilder(height,width,layersOfPawns,new NormalPawnFactory()),new NormalPawnFactory());
 
+        gameState.gameView view = new gameState.gameView();
+        standardGame.setView(view);
+    }
+
+    */
 
     public static void main(String[] args) {
         launch();

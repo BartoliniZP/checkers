@@ -30,7 +30,7 @@ public class Board {
     Node[][] pawns;
     Rectangle[][] fields;
 
-    public void drawBoard(){
+    public void drawBoard(int height, int width){
 
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
@@ -63,8 +63,8 @@ public class Board {
         }
         boolean isWhite = pawn.getColor();
         Node p = pawn.getTexture();
-        p.setTranslateX((xPos+0.5)* Main.tileSize);
-        p.setTranslateY((yPos+0.5)*Main.tileSize);
+        p.setTranslateX((xPos+0.5)*tileSize);
+        p.setTranslateY((yPos+0.5)*tileSize);
         root.getChildren().add(p);
         pawns[xPos][yPos]=p;
     }

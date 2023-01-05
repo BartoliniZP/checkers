@@ -4,14 +4,13 @@ import javafx.scene.Node;
 import javafx.scene.text.Text;
 
 public class TextureWrapper {
-//TODO implement
-    Node pawnTexture;
-    public TextureWrapper() {
-        this.pawnTexture=pawnTexture;
+    private Node texture;
+    public TextureWrapper(Node pawnTexture) {
+        this.texture=pawnTexture;
 
     }
     public Node getTexture () {
-        return pawnTexture;
+        return this.texture;
     };
     public TextureWrapper(TextureWrapper toCopy) {
 
