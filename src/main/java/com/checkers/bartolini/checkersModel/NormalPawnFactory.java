@@ -21,28 +21,29 @@ public class NormalPawnFactory implements PawnFactory {
     }
 
     NormalPawnFactory nPF = new NormalPawnFactory(Main.tileSize, Main.pawnScale);*/
+
     @Override
     public Pawn getPawn(Pawn.Team team) {
         if(team== Pawn.Team.WHITE) {
-            return new Pawn(team,new NormalPawnPossibleMovesChecker(false,true),new TextureWrapper(new Circle(tileSize*pawnScale, Color.WHITE)));
+            com.checkers.dubi.view.NormalPawn p = new com.checkers.dubi.view.NormalPawn(true);
+            return new Pawn(team,new NormalPawnPossibleMovesChecker(false,true),new TextureWrapper(p));
         }
         else {
-            return new Pawn(team,new NormalPawnPossibleMovesChecker(false,true),new TextureWrapper(new Circle(tileSize*pawnScale, Color.BLACK)));
+            com.checkers.dubi.view.NormalPawn p = new com.checkers.dubi.view.NormalPawn(false);
+            return new Pawn(team,new NormalPawnPossibleMovesChecker(false,true),new TextureWrapper(p));
         }
     }
 
     @Override
     public Pawn getQueen(Pawn.Team team) {
-        Circle circle = new Circle(tileSize*pawnScale);
-        circle.setStrokeWidth(7.0);
-        circle.setStroke(Color.BLUE);
+
         if(team== Pawn.Team.WHITE) {
-            circle.setFill(Color.WHITE);
-            return new Pawn(team, new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper(circle));
+            com.checkers.dubi.view.QueenPawn p = new com.checkers.dubi.view.QueenPawn(true);
+            return new Pawn(team, new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper(p));
         }
         else {
-            circle.setFill(Color.BLACK);
-            return new Pawn(team, new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper(circle));
+            com.checkers.dubi.view.QueenPawn p = new com.checkers.dubi.view.QueenPawn(false);
+            return new Pawn(team, new QueenPawnPossibleMovesChecker(true,true),new TextureWrapper(p));
         }
      }
 }

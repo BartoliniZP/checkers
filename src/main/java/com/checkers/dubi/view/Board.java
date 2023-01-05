@@ -24,13 +24,21 @@ public class Board {
         this.color2=color2;
         this.root=root;
         this.tileSize=tileSize;
-        this.pawns = new Node[width][height];
-        this.fields = new Rectangle[width][height];
+        this.pawns = new Node[height][width];
+        this.fields = new Rectangle[height][width];
     }
     Node[][] pawns;
     Rectangle[][] fields;
 
-    public void drawBoard(int height, int width){
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void drawBoard(){
 
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
@@ -58,23 +66,23 @@ public class Board {
     }
 
     public void addPawn(int xPos, int yPos, Pawn pawn){
-       if(pawns[xPos][yPos]!=null){
+       if(pawns[yPos][xPos]!=null){
             throw new IllegalArgumentException("Tile already taken");
         }
         boolean isWhite = pawn.getColor();
         Node p = pawn.getTexture();
-        p.setTranslateX((xPos+0.5)*tileSize);
-        p.setTranslateY((yPos+0.5)*tileSize);
+        p.setTranslateX((yPos+0.5)*tileSize);
+        p.setTranslateY((xPos+0.5)*tileSize);
         root.getChildren().add(p);
-        pawns[xPos][yPos]=p;
+        pawns[yPos][xPos]=p;
     }
 
     public void removePawn(double xCursor, double yCursor){
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
-        if(pawns[x][y]!=null){
-            root.getChildren().remove(pawns[x][y]);
-            pawns[x][y]=null;
+        if(pawns[y][x]!=null){
+            root.getChildren().remove(pawns[y][x]);
+            pawns[y][x]=null;
         }
 
     }
@@ -83,23 +91,23 @@ public class Board {
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
 
-            fields[x][y].setFill(highlightFieldSelectedPawnColor );
+            fields[y][x].setFill(highlightFieldSelectedPawnColor );
 
     }
 
     public void highlightFieldPossibleMove(double xCursor, double yCursor){
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
-            fields[x][y].setFill(highlightFieldPossibleMoveColor);
+            fields[y][x].setFill(highlightFieldPossibleMoveColor);
 
     }
     public void removehighlightField(double xCursor, double yCursor) {
         int x=getFieldCoordinatesOnBoard(xCursor, yCursor)[0];
         int y=getFieldCoordinatesOnBoard(xCursor, yCursor)[1];
         if((x+y)%2==0){
-            fields[x][y].setFill(color1);
+            fields[y][x].setFill(color1);
         } else{
-            fields[x][y].setFill(color2);
+            fields[y][x].setFill(color2);
         }
     }
 

@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-abstract class Pawn {
+public abstract class Pawn {
 
         private boolean isWhite;
 

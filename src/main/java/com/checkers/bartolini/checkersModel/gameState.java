@@ -178,10 +178,11 @@ public class gameState {
 
     private void unselectCurrentField() {
         if (currentlySelectedField == null) return;
-        currentlySelectedField = null;
         if(view==null) return;
         view.unhighlightField(convertFieldToPair(currentlySelectedField));
         view.unhighlightAllFields();
+
+        currentlySelectedField = null;
     }
 
     private Move checkIfMoveIsPossible(Field from, Field to) {

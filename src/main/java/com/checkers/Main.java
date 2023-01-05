@@ -10,6 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Pair;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
 /*
@@ -83,16 +86,45 @@ public class Main extends Application {
     public static final int layersOfPawns = 3;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws InterruptedException {
 
+        gameState standardGame = new gameState(new StandardWinCondition(),new AnyTakeObligatory(),new StandardCheckersBoardBuilder(height,width,layersOfPawns,new NormalPawnFactory()),new NormalPawnFactory());
 
         primaryStage.setTitle("Hello World");
         Pane root = new Pane();
         Scene scene = new Scene(root, tileSize*height, tileSize*width);
-        Board board = new Board(height,width, Color.RED, Color.GREEN,root,tileSize);
-        board.drawBoard(height,width);
+        checkersView gameView = new checkersView(root,tileSize,Color.RED, Color.GREEN,primaryStage);
+        standardGame.setView(gameView);
 
+        root.setOnMouseClicked(e->
+                {
+                    if (e.getButton() == MouseButton.PRIMARY) {
+                        double clickX = e.getX();
+                        double clickY = e.getY();
+                        int x = (int)clickX/tileSize;
+                        int y = (int)clickY/tileSize;
+                        standardGame.fieldClicked(new Pair<>(y,x));
+                    }
+                });
+     /*   standardGame.fieldClicked(new Pair<>(7,0));
+        standardGame.fieldClicked(new Pair<>(6,1));
+        standardGame.fieldClicked(new Pair<>(2,3));
+        standardGame.fieldClicked(new Pair<>(3,4));
+        standardGame.fieldClicked(new Pair<>(6,1));
+        standardGame.fieldClicked(new Pair<>(5,2));
+        standardGame.fieldClicked(new Pair<>(1,2));
+        standardGame.fieldClicked(new Pair<>(2,3));
+        standardGame.fieldClicked(new Pair<>(7,4));
+        standardGame.fieldClicked(new Pair<>(6,3));
+        standardGame.fieldClicked(new Pair<>(3,4));
+        standardGame.fieldClicked(new Pair<>(4,3));
+    //    standardGame.fieldClicked(new Pair<>(5,2));
+        standardGame.fieldClicked(new Pair<>(7,8));*/
 
+    //    Board board = new Board(height,width, Color.RED, Color.GREEN,root,tileSize);
+     //   board.drawBoard(height,width);
+
+/*
         for(int i=0;i<height;i++){
             for(int j=0; j<width;j++){
                 if(j < layersOfPawns && (i+j)%2==1) {
@@ -104,13 +136,9 @@ public class Main extends Application {
 
             }
         }
-
-     //   board.addPawn(3, 3, new QueenPawn(false));
-      //  board.addPawn(3, 4, new QueenPawn(true));
-
-
+*/
 // todo w mainie obiekt klasy gamestate do którego przekazuję współrzędne pola
-
+/*
         root.setOnMouseClicked(e->
                 {
                     if (e.getButton() == MouseButton.PRIMARY) {
@@ -138,7 +166,7 @@ public class Main extends Application {
                     }
                 });
 
-
+*/
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
