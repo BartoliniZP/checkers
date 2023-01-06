@@ -21,7 +21,7 @@ public class QueenPawn extends Pawn{
         }
         circle.setRadius(Main.tileSize * Main.pawnScale);
         circle.setStrokeWidth(7.0);
-        circle.setStroke(Color.BLUE);
+        circle.setStroke(Color.GOLDENROD);
     }
 
 }
