@@ -15,8 +15,8 @@ public class Main extends Application {
     public static final double pawnScale = 0.4;
 
     public static final int margin = 100;
-    public static final int width = 10;
-    public static final int height = 10;
+    public static final int width = 8;
+    public static final int height = 8;
     public static final int layersOfPawns = 3;
 
     @Override
@@ -27,7 +27,7 @@ public class Main extends Application {
         primaryStage.setTitle("Checkers Offline BartoliniZP & Dubi v1.0");
         Pane root = new Pane();
         Scene scene = new Scene(root, tileSize*height, tileSize*width);
-        checkersView gameView = new checkersView(root,tileSize,Color.RED, Color.GREEN,primaryStage);
+        checkersView gameView = new checkersView(root,tileSize,Color.ANTIQUEWHITE, Color.DARKGREEN,primaryStage);
         standardGame.setView(gameView);
 
         root.setOnMouseClicked(e->
