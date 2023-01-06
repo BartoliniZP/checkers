@@ -209,9 +209,10 @@ public class gameState {
 
     private void unselectCurrentField() {
         if (currentlySelectedField == null) return;
-        if (view == null) return;
-        view.unhighlightField(convertFieldToPair(currentlySelectedField));
-        view.unhighlightAllFields();
+        if (view != null) {
+            view.unhighlightField(convertFieldToPair(currentlySelectedField));
+            view.unhighlightAllFields();
+        }
         currentlySelectedField = null;
     }
 
