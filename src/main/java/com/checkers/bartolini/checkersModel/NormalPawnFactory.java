@@ -13,9 +13,9 @@ public class NormalPawnFactory implements PawnFactory {
     @Override
     public Pawn getQueen(Pawn.Team team) {
         if (team == Pawn.Team.WHITE) {
-            return new Pawn(team, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper("Q W"));
+            return new Pawn(team, new QueenPawnPossibleMovesChecker(true, true), new TextureWrapper("Q W"));
         } else {
-            return new Pawn(team, new NormalPawnPossibleMovesChecker(false, true), new TextureWrapper("Q B"));
+            return new Pawn(team, new QueenPawnPossibleMovesChecker(true, true), new TextureWrapper("Q B"));
         }
     }
 }
