@@ -290,8 +290,6 @@ public class gameState {
         }
     }
 
-    public Board getBoard() { //todo remove after tests
-        return board;
-    }
+
 
 }
