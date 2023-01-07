@@ -11,7 +11,7 @@ import javafx.util.Pair;
 
 public class Main extends Application {
 
-    public static final int tileSize = 50;
+    public static final int tileSize = 80;
     public static final double pawnScale = 0.4;
     public static final int width = 8;
     public static final int height = 8;
