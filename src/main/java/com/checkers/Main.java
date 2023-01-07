@@ -5,6 +5,7 @@ import com.checkers.server.ClientsInformer;
 import com.checkers.server.clientInputHandler;
 import com.checkers.server.standardInterpreterIntoGameState;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,7 +13,8 @@ import java.util.Scanner;
 
 
 public class Main {
-
+    //todo Random team draw
+    //todo Check if port is possible to free and possible to claim
     public static gameState askUserForGameMode(Scanner input) {
         System.out.println(" ");
         System.out.println("0 - Competitive checkers: 10x10 board, best take mandatory, pawn can capture backwards, 3 pawn lines");
@@ -64,6 +66,10 @@ public class Main {
             game.setView(informer);
             clientInputHandler client1input = new clientInputHandler(client1,new standardInterpreterIntoGameState(game, Pawn.Team.WHITE));
             //todo pass to clients info about team
+            DataOutputStream forTeamInform = new DataOutputStream(client1.getOutputStream());
+            forTeamInform.writeUTF("team 1");
+            forTeamInform = new DataOutputStream(client2.getOutputStream());
+            forTeamInform.writeUTF("team 0");
             clientInputHandler client2input = new clientInputHandler(client2,new standardInterpreterIntoGameState(game, Pawn.Team.BLACK));
             Thread client1thread = new Thread(client1input);
             Thread client2thread = new Thread(client2input);
