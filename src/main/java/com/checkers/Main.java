@@ -13,8 +13,7 @@ import java.util.Scanner;
 
 
 public class Main {
-    //todo Random team draw
-    //todo Check if port is possible to free and possible to claim
+
     public static gameState askUserForGameMode(Scanner input) {
         System.out.println(" ");
         System.out.println("0 - Competitive checkers: 10x10 board, best take mandatory, pawn can capture backwards, 3 pawn lines");
@@ -34,14 +33,13 @@ public class Main {
                 return new gameState(new AntichessWinCondition(), new BestTakeObligatory(), new StandardCheckersBoardBuilder(8, 8, 3, new NormalPawnFactory()), new NormalPawnFactory(), new PromoteToQueenOnLastRank(new NormalPawnFactory()));
             case 3:
                 return new gameState(new StandardWinCondition(), new AnyTakeObligatory(), new StandardCheckersBoardBuilder(8, 8, 3, new NormalPawnFactory()), new NormalPawnFactory(), new PromoteToQueenOnLastRank(new NormalPawnFactory()));
-            case 4:
-                //todo: create spanish checkers pawns factory (cannot capture backwards)
             default:
                 return null;
         }
     }
 
     public static void main(String[] args) {
+
 
         Scanner stdin = new Scanner(System.in);
         System.out.println("Ekodiesel");
@@ -65,7 +63,6 @@ public class Main {
             assert game != null;
             game.setView(informer);
             clientInputHandler client1input = new clientInputHandler(client1,new standardInterpreterIntoGameState(game, Pawn.Team.WHITE));
-            //todo pass to clients info about team
             DataOutputStream forTeamInform = new DataOutputStream(client1.getOutputStream());
             forTeamInform.writeUTF("team 1");
             forTeamInform = new DataOutputStream(client2.getOutputStream());
