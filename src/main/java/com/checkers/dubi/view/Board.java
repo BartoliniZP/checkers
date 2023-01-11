@@ -1,6 +1,7 @@
 package com.checkers.dubi.view;
 
 import com.checkers.Main;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -50,15 +51,24 @@ public class Board {
 
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
+                int iCopy = i;
+                int jCopy=j;
                 Rectangle rectangle = new Rectangle(i*tileSize,j*tileSize,tileSize,tileSize);
                 if((i+j)%2==0){
                     rectangle.setFill(color1);
                 } else{
                     rectangle.setFill(color2);
                 }
+                Runnable task = () -> {
+                    Platform.runLater(() -> {
+                        root.getChildren().add(rectangle);
+                        fields[iCopy][jCopy]=rectangle;
+                    });
+                };
+                Thread t = new Thread(task);
+                t.start();
 
-                root.getChildren().add(rectangle);
-                fields[i][j]=rectangle;
+
             }
         }
 
@@ -85,17 +95,18 @@ public class Board {
         pawns[yPos][xPos]=p;
     }*/
     public void addPawn(int x, int y, String type, String color){
+        System.out.println(" \""+color+"\"");
         if(pawns[y][x]!=null){
             throw new IllegalArgumentException("Tile already taken");
         }
         boolean isWhite;
-        if(color=="W"){
+        if(color.equals("W")){
             isWhite = true;
         } else{
             isWhite = false;
         }
         Node p;
-        if(type=="Q"){
+        if(type.equals("Q")){
             QueenPawn qp = new QueenPawn(isWhite);
             p = qp.getTexture();
         } else{
@@ -105,8 +116,16 @@ public class Board {
 
         p.setTranslateX((y+0.5)*tileSize);
         p.setTranslateY((x+0.5)*tileSize);
-        root.getChildren().add(p);
-        pawns[y][x]=p;
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                root.getChildren().add(p);
+                pawns[y][x]=p;
+            });
+        };
+        Thread t = new Thread(task);
+        t.start();
+
+
     }
 
     /*public void removePawn(double xCursor, double yCursor){
@@ -120,8 +139,16 @@ public class Board {
     }*/
     public void removePawn(int x, int y){
         if(pawns[y][x]!=null){
-            root.getChildren().remove(pawns[y][x]);
-            pawns[y][x]=null;
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    root.getChildren().remove(pawns[y][x]);
+                    pawns[y][x]=null;
+                });
+            };
+            Thread t = new Thread(task);
+            t.start();
+
+
         }
     }
 
@@ -192,8 +219,14 @@ public class Board {
 
         label.setMinWidth(100);
         label.setMinHeight(80);
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                popup.show(stage);
+            });
+        };
+        Thread t = new Thread(task);
+        t.start();
 
-        popup.show(stage);
     }
 
     public void team(int value) {

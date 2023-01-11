@@ -45,7 +45,8 @@ public class ServerInputHandler implements Runnable{
                         view.onClearHighlights();
                         break;
                     case "addPawn" :
-                        view.onAddPawn(Integer.parseInt(splitInput[1]),Integer.parseInt(splitInput[2]),splitInput[3], splitInput[4]);
+                        //System.out.println(Integer.parseInt(splitInput[1])+ "\n"+Integer.parseInt(splitInput[2])+ "\n"+splitInput[3].trim()+ "\n"+ splitInput[4].trim());
+                        view.onAddPawn(Integer.parseInt(splitInput[1]),Integer.parseInt(splitInput[2]),splitInput[3].trim(), splitInput[4].trim());
                         break;
                     case "removePawn" :
                         view.onRemovePawn(Integer.parseInt(splitInput[1]),Integer.parseInt(splitInput[2]));

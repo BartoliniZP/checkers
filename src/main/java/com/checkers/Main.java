@@ -3,6 +3,7 @@ package com.checkers;
 import com.checkers.dubi.view.ServerCheckersView;
 import com.checkers.dubi.view.ServerInputHandler;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
@@ -79,9 +80,14 @@ public class Main extends Application {
 
             //ServerInputHandler handler = new ServerInputHandler(input,gameView);
 
+
             Thread serverReader = new Thread(new ServerInputHandler(input,gameView));
             serverReader.start();
 
+
+            //Platform.runLater(new ServerInputHandler(input,gameView));
+
+//            new Thread(new Runnable() { @Override public void run() { Platform.runLater(new ServerInputHandler(input,gameView));} } ).start();
 
 
 
@@ -94,9 +100,9 @@ public class Main extends Application {
                         int y = (int)clickY/tileSize;
                         String spacebar = " ";
                         String result = "mouseClick ";
-                        result = result.concat(String.valueOf(x));
-                        result = result.concat(spacebar);
                         result = result.concat(String.valueOf(y));
+                        result = result.concat(spacebar);
+                        result = result.concat(String.valueOf(x));
                         try {
                             output.writeUTF(result);
                         } catch (IOException ex) {
