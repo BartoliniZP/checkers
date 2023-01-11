@@ -23,4 +23,5 @@ public class NormalPawn extends Pawn {
         circle.setRadius(Main.tileSize * Main.pawnScale);
     }
 
+
 }
