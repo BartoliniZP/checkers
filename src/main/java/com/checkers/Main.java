@@ -20,7 +20,6 @@ public class Main {
         System.out.println("1 - Classic checkers: Same as competitive but 8x8 board");
         System.out.println("2 - Anti-checkers 8x8 board");
         System.out.println("3 - Russian checkers: 8x8 board, any take mandatory, pawn can capture backwards, 3 pawn lines");
-        System.out.println("4 - Spanish checkers: 8x8 board, best take mandatory, pawn cannot capture backwards, 3 pawn lines");
         System.out.print("Gamemode: ");
         int gameMode = input.nextInt();
 
