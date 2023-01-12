@@ -82,7 +82,8 @@ public class ServerInputHandler implements Runnable{
                         break;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Fatal error during communication with server. Terminating");
+                System.exit(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
