@@ -3,6 +3,7 @@ package com.checkers.dubi.view;
 import com.checkers.Main;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -23,9 +24,7 @@ public class Board {
     Color highlightFieldSelectedPawnColor = Color.MEDIUMPURPLE;
     Color highlightFieldPossibleMoveColor = Color.PURPLE;
 
-    Stage stage;
-
-    public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize, Stage stage) {
+    public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize) {
         this.height =height;
         this.width=width;
         this.color1=color1;
@@ -34,7 +33,6 @@ public class Board {
         this.tileSize=tileSize;
         this.pawns = new Node[height][width];
         this.fields = new Rectangle[height][width];
-        this.stage = stage;
     }
     Node[][] pawns;
     Rectangle[][] fields;
@@ -47,7 +45,7 @@ public class Board {
         return width;
     }
 
-    public void drawBoard(){
+    public void drawBoard() throws InterruptedException {
 
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
@@ -67,6 +65,7 @@ public class Board {
                 };
                 Thread t = new Thread(task);
                 t.start();
+                t.join();
 
 
             }
@@ -94,11 +93,11 @@ public class Board {
         root.getChildren().add(p);
         pawns[yPos][xPos]=p;
     }*/
-    public void addPawn(int x, int y, String type, String color){
-        System.out.println(" \""+color+"\"");
-        if(pawns[y][x]!=null){
+    public void addPawn(int x, int y, String type, String color) throws InterruptedException {
+
+        /*if(pawns[y][x]!=null){
             throw new IllegalArgumentException("Tile already taken");
-        }
+        }*/
         boolean isWhite;
         if(color.equals("W")){
             isWhite = true;
@@ -124,6 +123,8 @@ public class Board {
         };
         Thread t = new Thread(task);
         t.start();
+        t.join();
+
 
 
     }
@@ -137,7 +138,9 @@ public class Board {
         }
 
     }*/
-    public void removePawn(int x, int y){
+    public void removePawn(int x, int y) throws InterruptedException {
+
+        //System.out.println("removed " + x +" " +y);
         if(pawns[y][x]!=null){
             Runnable task = () -> {
                 Platform.runLater(() -> {
@@ -147,6 +150,7 @@ public class Board {
             };
             Thread t = new Thread(task);
             t.start();
+            t.join();
 
 
         }
@@ -193,7 +197,7 @@ public class Board {
         }
     }
 
-    public void removeAllHighlights(int height, int width){
+    public void removeAllHighlights(){
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++) {
                 removeHighlightField(i,j);
@@ -201,7 +205,7 @@ public class Board {
             }
     }
 
-    public void gameFinished(int result){
+    public void gameFinished(int result) throws InterruptedException {
         TilePane tilePane = new TilePane();
         Label label = new Label();
         if(result == 1){
@@ -212,20 +216,26 @@ public class Board {
             label.setText("Invalid state!");
         }
 
-        Popup popup = new Popup();
+        //Popup popup = new Popup();
 
         label.setStyle("-fx-background-color: yellow;");
-        popup.getContent().add(label);
+        //popup.getContent().add(label);
 
         label.setMinWidth(100);
-        label.setMinHeight(80);
+        label.setMinHeight(100);
         Runnable task = () -> {
             Platform.runLater(() -> {
-                popup.show(stage);
+                //Scene scene = new Scene(label, 150, 150); //todo żeby ładniejsze było
+
+                label.setLayoutX(root.getLayoutX()+100);
+                label.setLayoutY(root.getLayoutY()+100);
+                root.getChildren().add(label);
+                //popup.show(stage);
             });
         };
         Thread t = new Thread(task);
         t.start();
+        t.join();
 
     }
 

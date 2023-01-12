@@ -20,7 +20,7 @@ public class NormalPawn extends Pawn {
         } else{
             circle.setFill(Color.BLACK);
         }
-        circle.setRadius(Main.tileSize * Main.pawnScale);
+        circle.setRadius(ServerInputHandler.tileSize * Main.pawnScale);
     }
 
 
