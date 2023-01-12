@@ -74,8 +74,9 @@ public class Main {
             client2thread.start();
             System.out.println(" ");
             System.out.println("Type 0 to force turn off server");
-            while(stdin.nextInt()!=0) {
-
+            while(true) {
+                String input = stdin.nextLine();
+                if(input.trim().equals("0")) System.exit(0);
             }
         }
         catch (IOException e) {
