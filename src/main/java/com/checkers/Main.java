@@ -33,9 +33,7 @@ public class Main extends Application {
     public static int overallSize =720;
 
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
-
-        System.out.println("test");
+    public void start(Stage primaryStage) {
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.print("IP: ");
