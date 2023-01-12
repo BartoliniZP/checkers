@@ -10,6 +10,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -240,6 +241,13 @@ public class Board {
     }
 
     public void team(int value) {
+        if(value==0){
+            Rotate rotate = new Rotate();
+            rotate.setPivotX(Main.overallSize/2);
+            rotate.setPivotY(Main.overallSize/2);
+            root.getTransforms().addAll(rotate);
+            rotate.setAngle(180);
+        }
         //todo 1 biały 0 czarny, obrocik, i pokazać kto jest kto
     }
 }

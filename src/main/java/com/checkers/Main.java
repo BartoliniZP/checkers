@@ -58,7 +58,6 @@ public class Main extends Application {
             serverReader.start();
 
             primaryStage.setTitle("Checkers BartoliniZP & Dubi v1.0");
-           // Scene scene = new Scene(root, height*tileSize, width*tileSize);
             Scene scene = new Scene(root, overallSize, overallSize);
 
             //Platform.runLater(new ServerInputHandler(input,gameView));

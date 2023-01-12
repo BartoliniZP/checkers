@@ -14,6 +14,8 @@ public class ServerInputHandler implements Runnable{
     static int height=0;
     static int width=0;
     static int tileSize=10;
+    static int team;
+
 
 
     public ServerInputHandler(DataInputStream input, viewHandlingCommands view) {
@@ -33,11 +35,14 @@ public class ServerInputHandler implements Runnable{
 
                 switch (splitInput[0]) {
                     case "team" :
-                        if(splitInput[1]=="0"){
+                        if(splitInput[1].equals("1")){
                             //team white
+                            team=1;
                         } else{
+                            team=0;
                             //team black
                         }
+                        view.onTeam(team);
                         break;
                     case "drawBoard" :
                         height=Integer.parseInt(splitInput[2]);
@@ -45,7 +50,7 @@ public class ServerInputHandler implements Runnable{
                         tileSize=Main.overallSize/height;
                             view.onDrawBoard(Integer.parseInt(splitInput[1]),Integer.parseInt(splitInput[2]));
 
-                        System.out.println(height+ " : " + width + " " + tileSize);
+                        //System.out.println(height+ " : " + width + " " + tileSize);
 
 
 
