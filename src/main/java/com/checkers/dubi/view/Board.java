@@ -2,14 +2,16 @@ package com.checkers.dubi.view;
 
 import com.checkers.Main;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -24,8 +26,9 @@ public class Board {
      int tileSize;
     Color highlightFieldSelectedPawnColor = Color.MEDIUMPURPLE;
     Color highlightFieldPossibleMoveColor = Color.PURPLE;
+    Stage stage;
 
-    public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize) {
+    public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize, Stage stage) {
         this.height =height;
         this.width=width;
         this.color1=color1;
@@ -34,6 +37,7 @@ public class Board {
         this.tileSize=tileSize;
         this.pawns = new Node[height][width];
         this.fields = new Rectangle[height][width];
+        this.stage=stage;
     }
     Node[][] pawns;
     Rectangle[][] fields;
@@ -217,21 +221,32 @@ public class Board {
             label.setText("Invalid state!");
         }
 
-        //Popup popup = new Popup();
 
-        label.setStyle("-fx-background-color: yellow;");
-        //popup.getContent().add(label);
 
         label.setMinWidth(100);
         label.setMinHeight(100);
         Runnable task = () -> {
             Platform.runLater(() -> {
-                //Scene scene = new Scene(label, 150, 150); //todo żeby ładniejsze było
+                if(ServerInputHandler.team==0) {
+                    Rotate rotate = new Rotate();
+                    rotate.setPivotX(Main.overallSize/2);
+                    rotate.setPivotY(Main.overallSize/2);
+                    root.getTransforms().addAll(rotate);
+                    rotate.setAngle(180);
+                }
 
-                label.setLayoutX(root.getLayoutX()+100);
-                label.setLayoutY(root.getLayoutY()+100);
+
+                label.setTextFill(Color.YELLOW);
+                label.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5.0), Insets.EMPTY)));
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setMinWidth(200);
+                label.setMinHeight(100);
+                label.setMaxWidth(200);
+                label.setMaxHeight(100);
+                label.setLayoutX(root.getLayoutX()+Main.overallSize/2-100);
+                label.setLayoutY(root.getLayoutY()+Main.overallSize/2-50);
+                label.setFont(new Font("Arial", 40));
                 root.getChildren().add(label);
-                //popup.show(stage);
             });
         };
         Thread t = new Thread(task);
@@ -240,14 +255,23 @@ public class Board {
 
     }
 
-    public void team(int value) {
-        if(value==0){
-            Rotate rotate = new Rotate();
-            rotate.setPivotX(Main.overallSize/2);
-            rotate.setPivotY(Main.overallSize/2);
-            root.getTransforms().addAll(rotate);
-            rotate.setAngle(180);
-        }
-        //todo 1 biały 0 czarny, obrocik, i pokazać kto jest kto
+    public void team(int value) throws InterruptedException {
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                if(value==0){
+                    Rotate rotate = new Rotate();
+                    rotate.setPivotX(Main.overallSize/2);
+                    rotate.setPivotY(Main.overallSize/2);
+                    root.getTransforms().addAll(rotate);
+                    rotate.setAngle(180);
+                }
+            });
+
+        };
+        Thread t = new Thread(task);
+        t.start();
+        t.join();
+
+
     }
 }

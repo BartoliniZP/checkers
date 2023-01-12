@@ -4,11 +4,13 @@ import com.checkers.dubi.view.ServerCheckersView;
 import com.checkers.dubi.view.ServerInputHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import java.io.DataInputStream;
@@ -46,7 +48,7 @@ public class Main extends Application {
             Pane root = new Pane();
 
 
-            ServerCheckersView gameView = new ServerCheckersView(color1,color2,root);
+            ServerCheckersView gameView = new ServerCheckersView(color1,color2,root,primaryStage);
 
             DataOutputStream output = new DataOutputStream(server.getOutputStream());
             DataInputStream input = new DataInputStream(server.getInputStream());
@@ -74,7 +76,6 @@ public class Main extends Application {
                         tileSize=ServerInputHandler.returnTileSize();
                         double clickX = e.getX();
                         double clickY = e.getY();
-                        System.out.println(clickX+ " | " +clickY + " | "+tileSize);
                         int x = (int)clickX/tileSize;
                         int y = (int)clickY/tileSize;
                         String spacebar = " ";
@@ -82,7 +83,6 @@ public class Main extends Application {
                         result = result.concat(String.valueOf(y));
                         result = result.concat(spacebar);
                         result = result.concat(String.valueOf(x));
-                        System.out.println(result);
                         try {
                             output.writeUTF(result);
                         } catch (IOException ex) {
@@ -101,7 +101,15 @@ public class Main extends Application {
 
 
             primaryStage.setScene(scene);
+            primaryStage.setMaxHeight(overallSize+37);
+            primaryStage.setMinHeight(overallSize+37);
+            primaryStage.setMaxWidth(overallSize+14);
+            primaryStage.setMinWidth(overallSize+14);
 
+            primaryStage.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
             primaryStage.show();
 
 

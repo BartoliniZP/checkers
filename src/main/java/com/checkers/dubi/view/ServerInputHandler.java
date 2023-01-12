@@ -102,7 +102,7 @@ public class ServerInputHandler implements Runnable{
     }
 
     public interface viewHandlingCommands{
-        void onTeam(int value);
+        void onTeam(int value) throws InterruptedException;
         void onDrawBoard(int height, int width) throws InterruptedException;
         void onSelected(int x, int y);
         void onPotential(int x, int y);

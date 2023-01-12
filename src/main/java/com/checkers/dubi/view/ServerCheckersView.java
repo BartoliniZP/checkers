@@ -13,25 +13,27 @@ public class ServerCheckersView implements ServerInputHandler.viewHandlingComman
     Color color2;
     Pane root;
     int tileSize;
+    Stage stage;
 
 
     //public ServerCheckersView(int height, int width,Color color1,Color color2, Pane root, int tileSize){
-    public ServerCheckersView(Color color1,Color color2, Pane root){
+    public ServerCheckersView(Color color1,Color color2, Pane root,Stage stage){
        // this.height=height;
         //this.width=width;
         this.color1=color1;
         this.color2=color2;
         this.root=root;
+        this.stage=stage;
     }
 
     @Override
-    public void onTeam(int value) {
+    public void onTeam(int value) throws InterruptedException {
         board.team(value);
     }
     @Override
     public void onDrawBoard(int height, int width) throws InterruptedException {
         tileSize=ServerInputHandler.returnTileSize();
-        board = new Board(height, width,color1,color2,root,tileSize);
+        board = new Board(height, width,color1,color2,root,tileSize,stage);
 
         board.drawBoard();
 
