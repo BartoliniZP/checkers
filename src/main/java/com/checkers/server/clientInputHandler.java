@@ -38,7 +38,11 @@ public class clientInputHandler implements Runnable {
             try {
                 String clientsInput = clientInput.readUTF();
                 interpreter.interpret(clientsInput);
-            } catch (Exception e) {
+            } catch(IOException e) {
+                System.err.println("Fatal error during communication with client. Terminating");
+                        System.exit(1);
+            }
+            catch (Exception e) {
                 System.err.println("Error during reading of client's Input");
             }
         }
