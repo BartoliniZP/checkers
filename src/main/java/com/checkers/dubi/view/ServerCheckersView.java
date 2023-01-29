@@ -1,13 +1,14 @@
 package com.checkers.dubi.view;
 
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ServerCheckersView implements ServerInputHandler.viewHandlingCommands{
     Board board;
-    int height;
-    int width;
+   // int height;
+   // int width;
     Color color1;
     Color color2;
     Pane root;
@@ -15,26 +16,28 @@ public class ServerCheckersView implements ServerInputHandler.viewHandlingComman
     Stage stage;
 
 
-
-    public ServerCheckersView(int height, int width,Color color1,Color color2, Pane root, int tileSize, Stage stage){
-
-        this.height=height;
-        this.width=width;
+    //public ServerCheckersView(int height, int width,Color color1,Color color2, Pane root, int tileSize){
+    public ServerCheckersView(Color color1,Color color2, Pane root,Stage stage){
+       // this.height=height;
+        //this.width=width;
         this.color1=color1;
         this.color2=color2;
         this.root=root;
-        this.tileSize=tileSize;
-        this.stage = stage;
+        this.stage=stage;
     }
 
     @Override
-    public void onTeam(int value) {
+    public void onTeam(int value) throws InterruptedException {
         board.team(value);
     }
     @Override
-    public void onDrawBoard(int height, int width) {
-        board = new Board(height, width,color1,color2,root,tileSize, stage);
+    public void onDrawBoard(int height, int width) throws InterruptedException {
+        tileSize=ServerInputHandler.returnTileSize();
+        board = new Board(height, width,color1,color2,root,tileSize,stage);
+
         board.drawBoard();
+
+
     }
 
     @Override
@@ -49,21 +52,21 @@ public class ServerCheckersView implements ServerInputHandler.viewHandlingComman
 
     @Override
     public void onClearHighlights() {
-        board.removeAllHighlights(height,width);
+        board.removeAllHighlights();
     }
 
     @Override
-    public void onAddPawn(int x, int y, String type, String color) {
+    public void onAddPawn(int x, int y, String type, String color) throws InterruptedException {
         board.addPawn(x,y,type,color);
     }
 
     @Override
-    public void onRemovePawn(int x, int y) {
+    public void onRemovePawn(int x, int y) throws InterruptedException {
         board.removePawn(x,y);
     }
 
     @Override
-    public void onGameFinished(int result) {
+    public void onGameFinished(int result) throws InterruptedException {
         board.gameFinished(result);
     }
 }

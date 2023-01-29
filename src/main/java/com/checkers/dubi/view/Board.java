@@ -1,13 +1,18 @@
 package com.checkers.dubi.view;
 
 import com.checkers.Main;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -21,7 +26,6 @@ public class Board {
      int tileSize;
     Color highlightFieldSelectedPawnColor = Color.MEDIUMPURPLE;
     Color highlightFieldPossibleMoveColor = Color.PURPLE;
-
     Stage stage;
 
     public Board(int height, int width, Color color1, Color color2, Pane root, int tileSize, Stage stage) {
@@ -33,7 +37,7 @@ public class Board {
         this.tileSize=tileSize;
         this.pawns = new Node[height][width];
         this.fields = new Rectangle[height][width];
-        this.stage = stage;
+        this.stage=stage;
     }
     Node[][] pawns;
     Rectangle[][] fields;
@@ -46,19 +50,29 @@ public class Board {
         return width;
     }
 
-    public void drawBoard(){
+    public void drawBoard() throws InterruptedException {
 
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
+                int iCopy = i;
+                int jCopy=j;
                 Rectangle rectangle = new Rectangle(i*tileSize,j*tileSize,tileSize,tileSize);
                 if((i+j)%2==0){
                     rectangle.setFill(color1);
                 } else{
                     rectangle.setFill(color2);
                 }
+                Runnable task = () -> {
+                    Platform.runLater(() -> {
+                        root.getChildren().add(rectangle);
+                        fields[iCopy][jCopy]=rectangle;
+                    });
+                };
+                Thread t = new Thread(task);
+                t.start();
+                t.join();
 
-                root.getChildren().add(rectangle);
-                fields[i][j]=rectangle;
+
             }
         }
 
@@ -84,18 +98,19 @@ public class Board {
         root.getChildren().add(p);
         pawns[yPos][xPos]=p;
     }*/
-    public void addPawn(int x, int y, String type, String color){
-        if(pawns[y][x]!=null){
+    public void addPawn(int x, int y, String type, String color) throws InterruptedException {
+
+        /*if(pawns[y][x]!=null){
             throw new IllegalArgumentException("Tile already taken");
-        }
+        }*/
         boolean isWhite;
-        if(color=="W"){
+        if(color.equals("W")){
             isWhite = true;
         } else{
             isWhite = false;
         }
         Node p;
-        if(type=="Q"){
+        if(type.equals("Q")){
             QueenPawn qp = new QueenPawn(isWhite);
             p = qp.getTexture();
         } else{
@@ -105,8 +120,18 @@ public class Board {
 
         p.setTranslateX((y+0.5)*tileSize);
         p.setTranslateY((x+0.5)*tileSize);
-        root.getChildren().add(p);
-        pawns[y][x]=p;
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                root.getChildren().add(p);
+                pawns[y][x]=p;
+            });
+        };
+        Thread t = new Thread(task);
+        t.start();
+        t.join();
+
+
+
     }
 
     /*public void removePawn(double xCursor, double yCursor){
@@ -118,10 +143,21 @@ public class Board {
         }
 
     }*/
-    public void removePawn(int x, int y){
+    public void removePawn(int x, int y) throws InterruptedException {
+
+        //System.out.println("removed " + x +" " +y);
         if(pawns[y][x]!=null){
-            root.getChildren().remove(pawns[y][x]);
-            pawns[y][x]=null;
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    root.getChildren().remove(pawns[y][x]);
+                    pawns[y][x]=null;
+                });
+            };
+            Thread t = new Thread(task);
+            t.start();
+            t.join();
+
+
         }
     }
 
@@ -166,7 +202,7 @@ public class Board {
         }
     }
 
-    public void removeAllHighlights(int height, int width){
+    public void removeAllHighlights(){
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++) {
                 removeHighlightField(i,j);
@@ -174,7 +210,7 @@ public class Board {
             }
     }
 
-    public void gameFinished(int result){
+    public void gameFinished(int result) throws InterruptedException {
         TilePane tilePane = new TilePane();
         Label label = new Label();
         if(result == 1){
@@ -185,18 +221,57 @@ public class Board {
             label.setText("Invalid state!");
         }
 
-        Popup popup = new Popup();
 
-        label.setStyle("-fx-background-color: yellow;");
-        popup.getContent().add(label);
 
         label.setMinWidth(100);
-        label.setMinHeight(80);
+        label.setMinHeight(100);
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                if(ServerInputHandler.team==0) {
+                    Rotate rotate = new Rotate();
+                    rotate.setPivotX(Main.overallSize/2);
+                    rotate.setPivotY(Main.overallSize/2);
+                    root.getTransforms().addAll(rotate);
+                    rotate.setAngle(180);
+                }
 
-        popup.show(stage);
+
+                label.setTextFill(Color.YELLOW);
+                label.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5.0), Insets.EMPTY)));
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setMinWidth(200);
+                label.setMinHeight(100);
+                label.setMaxWidth(200);
+                label.setMaxHeight(100);
+                label.setLayoutX(root.getLayoutX()+Main.overallSize/2-100);
+                label.setLayoutY(root.getLayoutY()+Main.overallSize/2-50);
+                label.setFont(new Font("Arial", 40));
+                root.getChildren().add(label);
+            });
+        };
+        Thread t = new Thread(task);
+        t.start();
+        t.join();
+
     }
 
-    public void team(int value) {
-        //todo 1 biały 0 czarny, obrocik, i pokazać kto jest kto
+    public void team(int value) throws InterruptedException {
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                if(value==0){
+                    Rotate rotate = new Rotate();
+                    rotate.setPivotX(Main.overallSize/2);
+                    rotate.setPivotY(Main.overallSize/2);
+                    root.getTransforms().addAll(rotate);
+                    rotate.setAngle(180);
+                }
+            });
+
+        };
+        Thread t = new Thread(task);
+        t.start();
+        t.join();
+
+
     }
 }
